@@ -8,7 +8,9 @@ def home():
     return render_template("base.html")
 
 # pass in page as var
-
+@app.route('/water')
+def water():
+    return render_template("water.html")
 
 @app.route('/<name>/')
 def user(name):
