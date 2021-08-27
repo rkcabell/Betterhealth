@@ -8,6 +8,7 @@ open the terminal and locate the project folder
 run "python -m flask run"  
 open localhost or ctrl + click on the link  
 
+or run app.py  
+
 Creators:  
-Ryan Cabell
-Cassidy Devenouges
+Ryan Cabell  
