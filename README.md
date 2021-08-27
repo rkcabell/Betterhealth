@@ -10,4 +10,3 @@ open localhost or ctrl + click on the link
 
 Creators:  
 Ryan Cabell
-Cassidy Devenouges
