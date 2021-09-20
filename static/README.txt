@@ -2,7 +2,7 @@ In this static folder put all media and files
 that are to be referenced and are not webpages
 example: css styles, images, and other elements
 
-Code for using images
+Example code for using images
 
     <!-- 
 
