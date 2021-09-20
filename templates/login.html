@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
     {% block title %}
-    Betterhealth login
     {% endblock %}
 
     {% block styles %}
@@ -23,14 +23,14 @@
 
 
 <body>
-    <hr>
     {% block content %}
     <div class="smallsectiongreen">
         <h1>Welcome to Better Health</h1>
+        <p>A better way to live</p>
     </div>
     <section class="green">
-        <form action=""></form>
         <div class="container">
+            <button value="Back" class="cancelbtn" style="position: absolute; right: 50px;">Back</button>
             <h1>Sign In</h1>
 
             <label for="email"><b>Email</b></label>
@@ -39,7 +39,6 @@
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="psw" required>
 
-            <label for="ggl"><b>Sign on with Google</b></label>
 
             <label>
                 <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
@@ -49,15 +48,14 @@
                     Privacy</a>.</p>
 
             <div class="clearfix">
-                <button type="button" class="cancelbtn">Cancel</button>
                 <button type="submit" class="signupbtn">Sign In</button>
                 <button type="google" class="googlebtn">Sign on with Google</button>
             </div>
         </div>
     </section>
 
-    <section class="lightblue">
-        <h2>Sign Up</h2>
+    <section class="darkgreen">
+        <h2>Don't have an account? Sign up!</h2>
 
         <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>
 
