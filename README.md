@@ -13,3 +13,4 @@ or run app.py
 Creators:  
 Ryan Cabell  
 Cassidy Devenouges
+Yngrid Corrales
