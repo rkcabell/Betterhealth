@@ -1,8 +1,14 @@
 from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
 
+'''
+    Main python app that runs the flask server and loads html pages.
+    All logic should be sent to other .py files for processing
+'''
 
 # Home page
+
+
 @app.route('/')
 def home():
     return render_template("base.html")
@@ -13,16 +19,42 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/handle_data', methods=["GET", "POST"])
-def handle_data():
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
+# For HTML form data
+
+
+@app.route('/handle_form', methods=["GET", "POST"])
+def handle_form():
     # Testing get form data
     if request.method == "POST":
         # name = email in HTML form under login page
-        email = request.form.get("email")
+        username = request.form.get("username")
         # password
         password = request.form.get("password")
-        return "Your email is "+email+" and your password is "+password
-    return render_template("handle_data.html")
+        return "Your name is " + username + " and your password is " + password
+
+# For json data EXAMPLE
+
+
+@app.route('/json-example', methods=['POST'])
+def json_example():
+    request_data = request.get_json()
+
+    language = request_data['language']
+    framework = request_data['framework']
+
+    # two keys are needed because of the nested object
+    python_version = request_data['version_info']['python']
+
+    # an index is needed because of the array
+    example = request_data['examples'][0]
+
+    boolean_test = request_data['boolean_test']
+
+    return ''
 
 
 @app.route('/terms')
