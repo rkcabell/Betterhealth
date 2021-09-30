@@ -13,5 +13,5 @@ or run app.py
 Creators:  
 Ryan Cabell  
 Cassidy Devenouges  
-Yngrid Corrales 00000000 
+Yngrid Corrales  
 Christopher Jackson
