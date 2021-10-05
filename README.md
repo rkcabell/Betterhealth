@@ -14,4 +14,5 @@ Creators:
 Ryan Cabell  
 Cassidy Devenouges  
 Yngrid Corrales  
-Christopher Jackson
+Christopher Jackson  
+George Bell
