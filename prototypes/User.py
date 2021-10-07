@@ -1,5 +1,5 @@
-from mongoengine import *
-
+import mongoengine
+from mongoengine import StringField, IntField, Document
 
 class User(Document):
     studentid = StringField(required=True)
