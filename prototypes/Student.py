@@ -9,3 +9,6 @@ class User(Document):
         self.studentid = id,
         self.name = name
         self.age = age
+
+#s1=Student('A001', 'Tara', 20)
+# s1.save()
