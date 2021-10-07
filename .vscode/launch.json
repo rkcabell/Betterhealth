@@ -8,7 +8,7 @@
             "type": "pwa-msedge",
             "request": "launch",
             "name": "Open base.html",
-            "file": "c:\\Users\\RyanFromSchool\\Documents\\VS Code\\Betterhealth\\templates\\base.html"
+            "file": "..\\templates\\base.html"
         }
     ]
 }
