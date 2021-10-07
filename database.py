@@ -13,6 +13,7 @@ from bson.objectid import ObjectId
 
 #For default host, port
 client = MongoClient()
+print ("client:", client)
 
 # For custom host, port
 #client = MongoClient('localhost', 27017)
@@ -22,9 +23,8 @@ client = MongoClient()
 db = client.bhealth
 
 # get a collection
-# collection is roughly the equivalent
-# to a table in a relational database
-collection = db.bhealth
+# collection is roughly the equivalent to a table in a relational database
+users = db.users
 
 # Data in MongoDB is stored using JSON-style "documents"
 # In PyMongo dictionaries to represent docs
@@ -37,7 +37,7 @@ user = {"first": "george",
         "height": 490,
         "weight": 9001}
 
-users = db.users
+#get inserted unique id
 user_id = users.insert_one(user).inserted_id
 
 db.list_collection_names()
@@ -58,9 +58,13 @@ newvalues = { "$set": { "first": "chris" } }
 
 users.update_one(myquery, newvalues)
 
-#print "customers" after the update:
+#print "users" after the update:
+print("db.users documents: ")
 for x in users.find():
   print(x)
+  
+query = {"weight": 9001}
+d = users.delete_many(query)
 
 # search
 # find_one() returns a single document

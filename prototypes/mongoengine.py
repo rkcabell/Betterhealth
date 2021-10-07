@@ -18,13 +18,7 @@ db = mongodb_client.db
 def home_page():
     online_users = db.users.find({"online": True})
     return render_template("index.html", online_users=online_users)
-        
-        #finds page or returns 404 instead of crashing
-@app.route("/user/<username>")
-def user_profile(username):
-    user = db.users.find_one_or_404({"_id": username})
-    return render_template("user.html",
-        user=user)
+
 
 @app.route("/add_one")
 def add_one():
