@@ -23,7 +23,13 @@ def login():
 def register():
     return render_template("register.html")
 
-# For HTML form data
+@app.route('/Homepage_sample')
+def homepage():
+    return render_template("Homepage_sample.html")
+
+@app.route('/profile_setup')
+def profile():
+    return render_template("profile_setup.html")
 
 
 @app.route('/handle_form', methods=["GET", "POST"])
