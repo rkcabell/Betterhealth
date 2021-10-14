@@ -13,23 +13,27 @@ app = Flask(__name__)
 def home():
     return render_template("base.html")
 
-
 @app.route('/login')
 def login():
     return render_template("login.html")
-
 
 @app.route('/register')
 def register():
     return render_template("register.html")
 
-@app.route('/Homepage_sample')
+@app.route('/testing_homepage')
 def homepage():
-    return render_template("Homepage_sample.html")
+    return render_template("testing_homepage.html")
 
 @app.route('/profile_setup')
 def profile():
     return render_template("profile_setup.html")
+
+@app.route('/testing_recipes')
+def recipes():
+    return render_template("testing_recipes.html")
+
+
 
 
 @app.route('/handle_form', methods=["GET", "POST"])
@@ -62,15 +66,6 @@ def json_example():
 
     return ''
 
-
-@app.route('/terms')
-def terms():
-    return render_template("terms.html")
-
-
-@app.route('/about')
-def about():
-    return render_template("about.html")
 # pass in page as var
 
 

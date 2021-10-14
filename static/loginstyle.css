@@ -5,8 +5,7 @@
 body {
     margin: 0;
     font-family: 'Prompt', sans-serif;
-    color: black;
-    background: #5a8d69;
+    background-color: #ffffff;
     overflow-x: hidden;
 }
 
@@ -19,39 +18,13 @@ section {
     padding: 40px 20vw;
 }
 
-.green {
-    background-color: #09a866;
-}
-.darkgreen {
-    background-color: #5a8d69;
-}
-
-.red {
-    background-color: #f44336;
-}
-
-.blue {
-    background-color: blue;
-}
-
-.lightblue {
-    background-color: lightskyblue;
-}
-
-.graygreen {
-    background-color: rgb(175, 202, 181);
-}
-
 * {
     box-sizing: border-box
 }
 
 input[type=text],
 input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
+    display:contents;
     border: none;
     background: #f1f1f1;
 }
@@ -175,37 +148,49 @@ button:hover {
     }
 }
 
-    /* Add a black background color to the top navigation */
-    .topnav {
-        background-color: #09a866;
-        overflow: hidden;
-    }
+    .profile-img {
+        width: 50%;
+      }
 
-    /* Style the links inside the navigation bar */
-    .topnav a {
-        background-color: #09a866;
-        float: left;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-    }
-
-    /* Change the color of links on hover */
-    .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-
-    /* Add a color to the active/current link */
-    .topnav a.active {
-        background-color: #09a866;
-        color: white;
-    }
-
-    .smallsectiongreen {
-        text-align: center;
-        background-color: #5a8d69;
-        color: white;
-    }
+      
+      .blue-text {
+        color: #0a0a0a;
+        font-weight: 500;
+      }
+      
+      .dtext {
+        color: #0a0a0a;
+        font-weight: 500;
+      }
+      
+      .time {
+        font-size: 9px !important;
+      }
+      
+      .feed-image img {
+        width: 100%;
+        height: auto;
+      }
+      
+      .resize-img {
+        width: 40%;
+      }
+      
+      .container-bg {
+        background: #f6f6f6;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        padding-top: 2rem;
+      }
+      
+      .container-fd {
+        background: #f6f6f6;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
+        padding-right: 1rem;
+        padding-top: 2rem;
+      }
+      
+      .dropdown {
+        padding-bottom: 3rem;
+      }
