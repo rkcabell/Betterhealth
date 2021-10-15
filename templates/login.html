@@ -1,4 +1,3 @@
-
 <!--
     Login page
 
@@ -14,14 +13,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-            crossorigin="anonymous">
-        <title>Log in to Betterhealth</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <title>Log in to Betterhealth</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="/static/loginstyle.css">
 
@@ -32,11 +28,8 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <a href="./login" class="navbar-brand">Better Health</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navmenu">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -48,99 +41,115 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="#logout" class="nav-link">Log out</a>
+                        <a href="./login" class="nav-link">Log out</a>
                     </li>
                 </ul>
             </div>
-        </nav>
+    </nav>
     {% block content %}
 
 
-    
+
     <!-- Top div section -->
     <div class="header">
-        <h1>Welcome to Better Health</h1>
-        <p>A better way to live</p>
-        <button value="Back" class="cancelbtn" style="position: absolute; right: 50px;">Back</button>
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-4"></div>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                    <h1>Welcome to Better Health</h1>
+                    <h3>A better way to live</h3>
+
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- main section for login elements and form-->
-    <section>
-        <class class="container">
-            <h1>Sign In</h1>
+    <div class="container">
+        <div class="row">
+            <!-- Dummy col for spacing -->
+            <div class="col-1">
+            </div>
 
-            <form action="{{ url_for('handle_form')}}" method="post">
-                <label for="username"><b>Username</b></label>
-                <input name="username" id="username" required>
-                <label for="password"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" required>
-                <label>
-                    <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
-                </label>
+            <!-- Center column with stuff -->
+            <div class="col">
 
-                <div class="clearfix">
-                    <button type="submit" class="signupbtn" value="Sign In">Sign In</button>
-                    <button type="submit" class="googlebtn" value="Register">Register</button>
-                    <button type="google" class="googlebtn">Sign on with Google</button>
-                </div>
-            </form>
-    </section>
+                <section class="container-gray">
+                    <class class="container-gray">
+                        <h1>Sign In</h1>
 
-    <!-- bottom section for modal and registering-->
-    <section>
-        <h2>Don't have an account? Sign up!</h2>
+                        <form action="{{ url_for('handle_form')}}" method="post">
+                            <label for="username"><b>Username</b></label>
+                            <input name="username" id="username" required>
+                            <p class="space"></p>
 
-        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>
+                            <label for="password"><b>Password</b></label>
+                            <input placeholder="Enter Password" name="password" id="password" required>
+                            <label>
+                                <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
+                            </label>
 
-        <div id="id01" class="modal">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-                title="Close Modal">&times;</span>
-            <form class="modal-content" action="/action_page.php">
-                <div class="container">
-                    <h1>Sign Up</h1>
-                    <p>Please fill in this form to create an account.</p>
-                    <hr>
-                    <label for="email"><b>Email</b></label>
-                    <input type="text" placeholder="Enter Email" name="email" required>
+                            <div class="clearfix">
+                                <button type="button" class="btn btn-success" type="submit">Sign In</button>
+                                <button type="button" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                </section>
 
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                <!-- bottom section for modal and registering-->
+                <section>
+                    <h2>Don't have an account? Sign up!</h2>
 
-                    <label for="psw-repeat"><b>Repeat Password</b></label>
-                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                    <button onclick="document.getElementById('register').style.display='block'" style="width:auto;">Sign
+                        Up</button>
 
-                    <label>
-                        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-                    </label>
+                    <div id="register" class="modal">
+                        <span onclick="document.getElementById('register').style.display='none'" class="close"
+                            title="Close Modal">&times;</span>
+                        <form class="modal-content" action="/action_page.php">
+                            <div class="container">
+                                <h1>Sign Up</h1>
+                                <p>Please fill in this form to create an account.</p>
+                                <hr>
+                                <label for="email"><b>Email</b></label>
+                                <input type="text" placeholder="Enter Email" name="email" required>
 
-                    <p>By creating an account you agree to our <a href="./terms" style="color:dodgerblue">Terms &
-                            Privacy</a>.
-                    </p>
+                                <label for="psw"><b>Password</b></label>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
 
-                    <div class="clearfix">
-                        <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                            class="cancelbtn">Cancel</button>
-                        <button type="submit" class="signupbtn">Sign Up</button>
+                                <label for="psw-repeat"><b>Repeat Password</b></label>
+                                <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+                                <label>
+                                    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px">
+                                    Remember me
+                                </label>
+
+                                <div class="clearfix">
+                                    <button type="button"
+                                        onclick="document.getElementById('register').style.display='none'"
+                                        class="cancelbtn">Cancel</button>
+                                    <button type="submit" class="signupbtn">Sign Up</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
-            </form>
-        </div>
 
-        <script>
-            // Get the modal
-            var modal = document.getElementById('id01');
+                    <script>
+                        // Get the modal
+                        var modal = document.getElementById('register');
 
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
-    </section>
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
-    {% endblock %}
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    </script>
+                </section>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+                    crossorigin="anonymous"></script>
+                {% endblock %}
 </body>

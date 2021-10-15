@@ -12,6 +12,10 @@ open localhost or ctrl + click on the link
 
 or run app.py  
 
+If pymongo doesnt work:  
+Add to system environment variable
+'C:\Program Files\MongoDB\Server\5.0\bin\'
+
 Creators:  
 Ryan Cabell  
 Cassidy Devenouges  
