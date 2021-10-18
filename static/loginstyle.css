@@ -2,6 +2,20 @@
     width : 32px;
     height : 32px;
 }
+
+/*Password characters*/
+@font-face {
+    font-family: 'password';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://jsbin-user-assets.s3.amazonaws.com/rafaelcastrocouto/password.ttf);
+  }
+  
+  input.key {
+    font-family: 'password';
+    width: 100px; height: 16px;  
+  }
+  
 body {
     margin: 0;
     background-color: #ffffff;
@@ -21,8 +35,7 @@ section {
     box-sizing: border-box
 }
 
-input[type=text],
-input[type=password] {
+input[type=text] {
     display:contents;
     border: none;
     background: #f1f1f1;
@@ -115,6 +128,10 @@ button:hover {
 .close:focus {
     color: #f44336;
     cursor: pointer;
+}
+
+input.pw {
+    -webkit-text-security: disc;
 }
 
 /* Clear floats */

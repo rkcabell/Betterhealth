@@ -38,6 +38,15 @@
                     <li class="nav-item">
                         <a href="./login" class="nav-link">Login</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"></a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -56,6 +65,7 @@
             <div class="row gx-5">
                 <div class="col">
                     <div class="p-4"></div>
+                    <!-- X button -->
                     <button type="button" class="btn-close" aria-label="Close"></button>
                     <h1>Welcome to Better Health</h1>
                     <h3>A better way to live</h3>
@@ -85,7 +95,7 @@
                             <p class="space"></p>
 
                             <label for="password"><b>Password</b></label>
-                            <input placeholder="Enter Password" name="password" id="password" required>
+                            <input class="key" id="password" required>
                             <label>
                                 <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
                             </label>
@@ -101,8 +111,8 @@
                 <section>
                     <h2>Don't have an account? Sign up!</h2>
 
-                    <button onclick="document.getElementById('register').style.display='block'" style="width:auto;">Sign
-                        Up</button>
+                    <button type="button" class="btn btn-warning" onclick="document.getElementById('register').style.display='block'">Register</button>
+
 
                     <div id="register" class="modal">
                         <span onclick="document.getElementById('register').style.display='none'" class="close"

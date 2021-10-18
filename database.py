@@ -2,13 +2,29 @@
 # see link for 
 # bulk inserts, bulk querying, count num of documents,
 # advanced queries, indexing(ascending)
-#========================
-#This file was made using a pymongo tutorial
-#========================
+
 import pymongo
 import pprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from pymongo import ReturnDocument
+
+# Constants for 'activity_level' in bhealth.users.activity_level
+SEDENTARY = 0
+LIGHT = 1
+MODERATE = 2
+HEAVY = 3
+
+# Constants for 'diet' in bhealth.users.diet
+NO_RESTRICTIONS = 0
+VEGETARIAN = 1
+VEGAN = 2
+
+# Constants for 'gender' in bhealth.users.gender
+FEMALE = 0
+MALE = 1
+OTHER = 2
+
 
 
 #For default host, port
@@ -25,6 +41,7 @@ db = client.bhealth
 # get a collection
 # collection is roughly the equivalent to a table in a relational database
 users = db.users
+history = db.history
 
 # Data in MongoDB is stored using JSON-style "documents"
 # In PyMongo dictionaries to represent docs
@@ -32,39 +49,86 @@ users = db.users
 # Inserting a document
 # db_collection.insert_one() 
 #   returns an instance of InsertOneResult(inserted_id, acknowledged)
-user = {"first": "george",
-        "last": "smith",
-        "height": 490,
-        "weight": 9001}
+# user = {"first": "george",
+#        "last": "smith",
+#        "height": 490,
+#       "weight": 9001}
+'''
+Example of user collection
+user = {
+  "username": "Test",
+  "password": "pTest",
+  "weight": 0,
+  "height": 0,
+  "activity_level": SEDENTARY,
+  "diet": NO_RESTRICTIONS,
+  "gender": OTHER,
+  "dob": "1970-01-01"
+}
+
+'''
+# uses id of current user to link to data in 'users' collection 
+# returns an updated document of history after updating
+# upsert = True means that it creates a document if it doesnt already exist
+# current_user_id comes from the login WIP
+current_user_id = ObjectId('616ce97e7225695d911646aa')
+current_user_settings = db.users.find_one({'_id': current_user_id})
+current_user_history = db.history.find_one_and_update (
+              {'_id': current_user_id},
+              {'$set': {'linked': True}},
+              upsert=True,
+              return_document=ReturnDocument.AFTER)
+
+# get data from HTML form
+# can be replaced with separate update methods
+history_instance = {
+  "eaten_cals": 1,
+  "workout_cals": 0,
+  "calorie_goal": 2000,
+  "water_tracked": 500,
+  "water_goal": 3000,
+  "last_workout": "bike",
+  "linked": False
+}
+
+history.insert_one(history_instance)
+#users.insert_one(user)
+#users.update_one({'_id': '616cc83d32d3b6e1c7121e62'},  {"$set": user}, upsert=True)
+
+
+# my_collection = db['my_collection']
+# index_name = 'my_index'
+# my_collection.create_index(..., name=index_name, unique=False)
+
 
 #get inserted unique id
-user_id = users.insert_one(user).inserted_id
+#user_id = users.insert_one(user).inserted_id
 
 db.list_collection_names()
 
 #for x in users.find():
 #  print(x)
 
-myquery = { "height": 490 }
+myquery = { "height": 0 }
 mydoc = users.find(myquery)
 #for x in mydoc:
 #  print(x)
 
-#myquery = { "height": 490 }
+#myquery = { "height": 0 }
 #users.delete_one(myquery)
 
-myquery = { "first": "george" }
-newvalues = { "$set": { "first": "chris" } }
+#myquery = { "username": "Test" }
+#newvalues = { "$set": { "username": "Test2" } }
 
-users.update_one(myquery, newvalues)
+#users.update_one(myquery, newvalues)
 
 #print "users" after the update:
-print("db.users documents: ")
-for x in users.find():
-  print(x)
+#print("db.users documents: ")
+#for x in users.find():
+#  print(x)
   
-query = {"weight": 9001}
-d = users.delete_many(query)
+#query = {"weight": 0}
+#d = users.delete_many(query)
 
 # search
 # find_one() returns a single document
