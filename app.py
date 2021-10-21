@@ -44,7 +44,8 @@ def handle_form():
         username = request.form.get("username")
         # password
         password = request.form.get("password")
-        return "Your name is " + username + " and your password is " + password
+        #return "Your name is " + username + " and your password is " + password
+        return render_template("testing_homepage.html")
 
 # For json data EXAMPLE
 

@@ -66,7 +66,6 @@
                 <div class="col">
                     <div class="p-4"></div>
                     <!-- X button -->
-                    <button type="button" class="btn-close" aria-label="Close"></button>
                     <h1>Welcome to Better Health</h1>
                     <h3>A better way to live</h3>
 
@@ -89,20 +88,20 @@
                     <class class="container-gray">
                         <h1>Sign In</h1>
 
-                        <form action="{{ url_for('handle_form')}}" method="post">
+                        <form action='/handle_form' method="POST">
                             <label for="username"><b>Username</b></label>
-                            <input name="username" id="username" required>
+                            <input class="form-control" name="username" id="username" style="width: 50%" required>
                             <p class="space"></p>
 
                             <label for="password"><b>Password</b></label>
-                            <input class="key" id="password" style="width: 50%;" required>
+                            <input class="form-control" id="password" style="width: 50%;" required>
                             <label>
                                 <input type="checkbox" name="remember" style="margin-bottom:15px"> Remember me
                             </label>
 
                             <div class="clearfix">
-                                <button type="button" class="btn btn-success" type="submit">Sign In</button>
-                                <button type="button" class="btn btn-primary">Register</button>
+                                <button class="btn btn-success" type="submit" name="submitbutton" value="signin">Sign In</button>
+                                <button class="btn btn-primary" type="submit" name="submitbutton" value="register">Register</button>
                             </div>
                         </form>
                 </section>
