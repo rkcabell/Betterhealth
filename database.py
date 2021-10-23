@@ -8,6 +8,9 @@ import pprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
+from pass_sec import encrypt_password
+from pass_sec import check_encrypted_password
+
 
 # Constants for 'activity_level' in bhealth.users.activity_level
 SEDENTARY = 0
@@ -42,16 +45,14 @@ db = client.bhealth
 users = db.users
 history = db.history
 
+password = pass_sec.
+
 # Data in MongoDB is stored using JSON-style "documents"
 # In PyMongo dictionaries to represent docs
 
 # Inserting a document
 # db_collection.insert_one()
 #   returns an instance of InsertOneResult(inserted_id, acknowledged)
-# user = {"first": "george",
-#        "last": "smith",
-#        "height": 490,
-#       "weight": 9001}
 '''
 Example of user collection
 user = {
@@ -69,7 +70,8 @@ user = {
 # uses id of current user to link to data in 'users' collection
 # returns an updated document of history after updating
 # upsert = True means that it creates a document if it doesnt already exist
-# current_user_id comes from the login WIP
+# current_user_id comes from the login [WIP]
+'''
 current_user_id = ObjectId('616ce97e7225695d911646aa')
 current_user_settings = db.users.find_one({'_id': current_user_id})
 current_user_history = db.history.find_one_and_update(
@@ -77,9 +79,10 @@ current_user_history = db.history.find_one_and_update(
     {'$set': {'linked': True}},
     upsert=True,
     return_document=ReturnDocument.AFTER)
-
+'''
 # get data from HTML form
 # can be replaced with separate update methods
+'''
 history_instance = {
     "eaten_cals": 1,
     "workout_cals": 0,
@@ -91,6 +94,7 @@ history_instance = {
 }
 
 history.insert_one(history_instance)
+'''
 # users.insert_one(user)
 #users.update_one({'_id': '616cc83d32d3b6e1c7121e62'},  {"$set": user}, upsert=True)
 
@@ -133,7 +137,7 @@ mydoc = users.find(myquery)
 # find_one() returns a single document
 '''
 OPTIONAL: precede 'users' with  'pprint.pprint()'
->>>users.find_one({"username": "Shivaz", "password": "plaintext"})
+>>>users.find_one({"username": "username", "password": "plaintext"})
 >>>users.find_one({"_id": user_id})
 
 '''
