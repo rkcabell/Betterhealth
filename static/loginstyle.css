@@ -36,6 +36,7 @@ section {
 }
 
 input[type=text] {
+    width: 500px; height: 24px;
     display:contents;
     border: none;
     background: #f1f1f1;
@@ -111,7 +112,8 @@ button:hover {
 }
 
 .container-gray {
-    padding: 40px;
+    padding: 24px;
+    display: block;
     background-color: lightgray;
 }
 
