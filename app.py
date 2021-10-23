@@ -52,20 +52,20 @@ def recipes():
 def handle_form():
     # Testing get form data
     if request.method == "POST":
-        #if id == "signin":
-        # name = email in HTML form under login page
-        username = request.form.get("username")
-        # password
-        password = request.form.get("password")
-        #return "Your name is " + username + " and your password is " + password
-        #if dblogin(username, password) != "None":
-        doc = users.find({"username" : username})
-        if doc == users.find({"password" : password}):
-            return render_template("testing_homepage.html")
-        else:
-            return "Invalid login information"
-        #elif id == "resiter":
-            #return "Add how to register"
+        if request.form.get('submitbutton') == 'signin':
+            # name = email in HTML form under login page
+            username = request.form.get("username")
+            # password
+            password = request.form.get("password")
+            #return "Your name is " + username + " and your password is " + password
+            #if dblogin(username, password) != "None":
+            doc = users.find({"username" : username})
+            if doc == users.find({"password" : password}):
+                return render_template("testing_homepage.html")
+            else:
+                return "Invalid login information"
+        elif request.form.get('submitbutton') == 'register':
+            return "Add how to register"
 
 # For json data EXAMPLE
 
