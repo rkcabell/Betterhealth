@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
 
-from database import login
+from database import dblogin
 
 
 '''
@@ -48,9 +48,10 @@ def handle_form():
         username = request.form.get("username")
         # password
         password = request.form.get("password")
-        user = login(username, password)
+        user = dblogin(username, password)
         if user == None:
             return "Invalid login information"
+        # Set user to CURRENT USER
         return render_template("testing_homepage.html")
 
 # For json data EXAMPLE

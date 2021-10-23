@@ -10,6 +10,8 @@ from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from pass_sec import encrypt_password
 from pass_sec import check_encrypted_password
+from passlib.hash import sha256_crypt
+
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -39,8 +41,8 @@ history = db.history
 
 # Matches the username to the password in the db
 # returns user == None if it fails
-def login(username, password):
-    user = users.find_one({"username": username}, {"password": encrypt_password(password)})
+def dblogin(username, password):
+    user = users.find_one({"username": username})
     return user
 
 
