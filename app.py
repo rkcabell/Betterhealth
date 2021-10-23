@@ -1,8 +1,13 @@
 from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
 
-from database import dblogin
+#from database import dblogin
 
+import pymongo
+import pprint
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from pymongo import ReturnDocument
 
 '''
     Main python app that runs the flask server and loads html pages.
@@ -11,7 +16,10 @@ from database import dblogin
 
 # Home page
 
-
+client = MongoClient()
+db = client.bhealth
+users = db.users
+history = db.history
 
 @app.route('/')
 def home():
@@ -44,15 +52,20 @@ def recipes():
 def handle_form():
     # Testing get form data
     if request.method == "POST":
+        #if id == "signin":
         # name = email in HTML form under login page
         username = request.form.get("username")
         # password
         password = request.form.get("password")
-        user = dblogin(username, password)
-        if user == None:
+        #return "Your name is " + username + " and your password is " + password
+        #if dblogin(username, password) != "None":
+        doc = users.find({"username" : username})
+        if doc == users.find({"password" : password}):
+            return render_template("testing_homepage.html")
+        else:
             return "Invalid login information"
-        # Set user to CURRENT USER
-        return render_template("testing_homepage.html")
+        #elif id == "resiter":
+            #return "Add how to register"
 
 # For json data EXAMPLE
 
