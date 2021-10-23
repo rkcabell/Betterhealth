@@ -1,12 +1,23 @@
 from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
 
+import pymongo
+import pprint
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from pymongo import ReturnDocument
+
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
 '''
 
 # Home page
+
+client = MongoClient()
+db = client.bhealth
+users = db.users
+history = db.history
 
 
 @app.route('/')
@@ -45,7 +56,11 @@ def handle_form():
         # password
         password = request.form.get("password")
         #return "Your name is " + username + " and your password is " + password
-        return render_template("testing_homepage.html")
+        doc = users.find({"username" : username})
+        if doc == users.find({"password" : password}):
+            return render_template("testing_homepage.html")
+        else:
+            return "Invalid login information"
 
 # For json data EXAMPLE
 
