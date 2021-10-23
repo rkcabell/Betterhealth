@@ -33,26 +33,17 @@ OTHER = 2
 client = MongoClient()
 print("client:", client)
 
-# For custom host, port
-#client = MongoClient('localhost', 27017)
-#client = MongoClient('mongodb://localhost:27017/')
-
-# get database
 db = client.bhealth
-
-# get a collection
-# collection is roughly the equivalent to a table in a relational database
 users = db.users
 history = db.history
 
-password = pass_sec.
+# Matches the username to the password in the db
+# returns user == None if it fails
+def login(username, password):
+    user = users.find_one({"username": username}, {"password": encrypt_password(password)})
+    return user
 
-# Data in MongoDB is stored using JSON-style "documents"
-# In PyMongo dictionaries to represent docs
 
-# Inserting a document
-# db_collection.insert_one()
-#   returns an instance of InsertOneResult(inserted_id, acknowledged)
 '''
 Example of user collection
 user = {
@@ -67,10 +58,7 @@ user = {
 }
 
 '''
-# uses id of current user to link to data in 'users' collection
-# returns an updated document of history after updating
-# upsert = True means that it creates a document if it doesnt already exist
-# current_user_id comes from the login [WIP]
+
 '''
 current_user_id = ObjectId('616ce97e7225695d911646aa')
 current_user_settings = db.users.find_one({'_id': current_user_id})
