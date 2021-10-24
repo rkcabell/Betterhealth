@@ -3,7 +3,6 @@ Better Health is a project dedicated to creating an app that suggests health adv
 Dependancies:  
 Flask
 pip install -r requirements.txt
-install Live Server and Sass extensions
 
 To run:  
 open the terminal and locate the project folder  
