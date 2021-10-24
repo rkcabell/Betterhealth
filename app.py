@@ -96,8 +96,11 @@ def register_form():
             "gender": request.form.get("gender"),
             "dob": request.form.get("dob")
         }
-        users.insert_one(new_user)
-        return render_template("testing_homepage.html")
+        if(users.count_documents({"username" : request.form.get("username")}) == 0 and users.count_documents({"password" : request.form.get("password")}) == 0):
+            users.insert_one(new_user)
+            return render_template("testing_homepage.html")
+        else:
+            return "That login information is already taken!"
 
 
 @app.route('/json-example', methods=['POST'])
