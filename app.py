@@ -59,12 +59,13 @@ def handle_form():
             password = request.form.get("password")
             #return "Your name is " + username + " and your password is " + password
             #if dblogin(username, password) != "None":
-            doc = users.find({"username" : username})
-            if doc == users.find({"password" : password}):
+            #doc = users.find_one({"username" : username})
+            if users.find_one({"username" : username}) == users.find_one({"password" : password}) and users.count_documents({"username" : username}) > 0 and users.count_documents({"password" : password}) > 0:
                 return render_template("testing_homepage.html")
             else:
-                for data in users.find():
-                    print(data)
+                #users.delete_many({ "username": {"$regex": "^w"} })
+                #for data in users.find():
+                #    print(data)
                 return "Invalid login information"
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
