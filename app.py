@@ -63,9 +63,22 @@ def handle_form():
             if doc == users.find({"password" : password}):
                 return render_template("testing_homepage.html")
             else:
+                for data in users.find():
+                    print(data)
                 return "Invalid login information"
         elif request.form.get('submitbutton') == 'register':
-            return "Add how to register"
+            new_user = {
+                "username": request.form.get("username"),
+                "password": request.form.get("password"),
+                "weight": 0,
+                "height": 0,
+                "activity_level": "SEDENTARY",
+                "diet": "NO_RESTRICTIONS",
+                "gender": "OTHER",
+                "dob": "1970-01-01"
+            }
+            users.insert_one(new_user)
+            return render_template("login.html")
 
 # For json data EXAMPLE
 
