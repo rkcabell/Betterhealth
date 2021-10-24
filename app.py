@@ -70,8 +70,7 @@ def login():
             #}
             #users.insert_one(new_user)
             return render_template("register.html")
-        else:
-            return render_template("login.html")
+    return render_template("login.html")
 
 # Loads page
 # when form is submitted, update user and reload page
