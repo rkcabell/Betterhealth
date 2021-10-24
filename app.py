@@ -1,7 +1,9 @@
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, session
+from flask.ctx import has_request_context
+from flask_session import Session
 app = Flask(__name__)
 
-from database import dblogin
+from database import db_login, db_update_settings
 
 
 '''
@@ -12,14 +14,9 @@ from database import dblogin
 # Home page
 
 
-
 @app.route('/')
 def home():
     return render_template("testing_homepage.html")
-
-@app.route('/login')
-def login():
-    return render_template("login.html")
 
 @app.route('/register')
 def register():
@@ -39,42 +36,53 @@ def recipes():
 
 
 
-
-@app.route('/handle_form', methods=["GET", "POST"])
-def handle_form():
+@app.route('/login', methods=["GET", "POST"])
+def login():
     # Testing get form data
     if request.method == "POST":
         # name = email in HTML form under login page
         username = request.form.get("username")
         # password
         password = request.form.get("password")
-        user = dblogin(username, password)
-        if user == None:
+        verify_login = db_login(username, password)
+        if verify_login == False:
             return "Invalid login information"
         # Set user to CURRENT USER
         return render_template("testing_homepage.html")
+    else:
+        return render_template("login.html")
 
-# For json data EXAMPLE
+# Loads page
+# when form is submitted, update user and reload page
+@app.route('/settings', methods=["GET", "POST"])
+def settings():
+    if request.method == "POST":
+        weight = request.form.get("input_weight")
+        height = request.form.get("input_height")
+        dob = request.form.get("input_dob")
+        # value = female, male, other
+        if 'gender' in request.form:
+            gender = request.form['gender']
+        else:
+            gender = None
+        # value = sedentary, light, moderate, heavy
+        if 'activity' in request.form:
+            activity_level = request.form['activity']
+        else:
+            activity_level = None
+        # value = regular, vegan, vegetarian
+        if 'diet' in request.form:
+            diet = request.form['diet']
+        else:
+            diet = None
 
+        settings = [weight, height, dob, gender, activity_level, diet]
 
-@app.route('/json-example', methods=['POST'])
-def json_example():
-    request_data = request.get_json()
-
-    language = request_data['language']
-    framework = request_data['framework']
-
-    # two keys are needed because of the nested object
-    python_version = request_data['version_info']['python']
-
-    # an index is needed because of the array
-    example = request_data['examples'][0]
-
-    boolean_test = request_data['boolean_test']
-
-    return ''
-
-# pass in page as var
+        verify_update = db_update_settings(settings)
+        print("Update succeeded: " + str(verify_update))
+        return render_template("settings.html")
+    else:
+        return render_template("settings.html")
 
 
 # @app.route('/<name>/')

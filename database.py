@@ -9,9 +9,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from pass_sec import encrypt_password
-from pass_sec import check_encrypted_password
-from passlib.hash import sha256_crypt
-
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -39,13 +36,60 @@ db = client.bhealth
 users = db.users
 history = db.history
 
+CURRENT_USER_ID = db.users.find_one({"_id": "2332532rqef3"})
+
 # Matches the username to the password in the db
-# returns user == None if it fails
-def dblogin(username, password):
-    user = users.find_one({"username": username})
-    return user
+# returns true if user exists, otherwise false
+def db_login(username, password):
+    login_attempt = {"username": username, "password": encrypt_password(password)}
+    user = users.find_one(login_attempt)
+    if user is None:
+        return False
+    return True
 
+# update the settings applied on settings page
+# Parameters: list of updated settings from app.py
+# Returns: list of only the settings that were nonempty
+def db_update_settings(settings):
+    updated_settings = []
+    setting_elems = ["weight", "height", "dob", "gender", "activity", "diet"]
+    print(settings)
+    # make string settings into constants
+    settings = assign_constants(settings)
+    for i in range(len(settings)):
+        if (settings[i] is not None):
+            users.find_one_and_update({"_id": CURRENT_USER_ID},
+            {"$set": {setting_elems[i] : settings[i]}})
+            # store updated settings to return
+            updated_settings.append(settings[i])
+    print(updated_settings)
+    return updated_settings
 
+# make the settings into the proper constant names
+def assign_constants(settings):
+    if(settings[4] == "sedentary"):
+        settings[4] = SEDENTARY
+    elif(settings[4] == "light"):
+        settings[4] = LIGHT
+    elif(settings[4] == "moderate"):
+        settings[4] = MODERATE
+    elif(settings[4] == "heavy"):
+        settings[4] = HEAVY
+
+    if(settings[3] == "female"):
+        settings[3] = FEMALE
+    elif(settings[3] == "male"):
+        settings[3] = MALE
+    elif(settings[3] == "other"):
+        settings[3] = OTHER
+
+    if(settings[5] == "regular"):
+        settings[5] = NO_RESTRICTIONS
+    elif(settings[5] == "vegan"):
+        settings[5] = VEGAN
+    elif(settings[5] == "vegetarian"):
+        settings[5] = VEGETARIAN
+    return settings
 '''
 Example of user collection
 user = {
