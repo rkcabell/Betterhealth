@@ -5,14 +5,21 @@ app = Flask(__name__)
 
 from database import db_login, db_update_settings
 
+import pymongo
+import pprint
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from pymongo import ReturnDocument
 
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
 '''
 
-# Home page
-
+client = MongoClient()
+db = client.bhealth
+users = db.users
+history = db.history
 
 @app.route('/')
 def home():
@@ -40,17 +47,31 @@ def recipes():
 def login():
     # Testing get form data
     if request.method == "POST":
-        # name = email in HTML form under login page
-        username = request.form.get("username")
-        # password
-        password = request.form.get("password")
-        verify_login = db_login(username, password)
-        if verify_login == False:
-            return "Invalid login information"
-        # Set user to CURRENT USER
-        return render_template("testing_homepage.html")
-    else:
-        return render_template("login.html")
+        if request.form.get('submitbutton') == 'signin':
+            # name = email in HTML form under login page
+            username = request.form.get("username")
+            # password
+            password = request.form.get("password")
+            verify_login = db_login(username, password)
+            if verify_login == False:
+                return "Invalid login information"
+            # Set user to CURRENT USER
+            return render_template("testing_homepage.html")
+        elif request.form.get('submitbutton') == 'register':
+            #new_user = {
+            #    "username": request.form.get("username"),
+            #    "password": request.form.get("password"),
+            #    "weight": 0,
+            #    "height": 0,
+            #    "activity_level": "SEDENTARY",
+            #    "diet": "NO_RESTRICTIONS",
+            #    "gender": "OTHER",
+            #    "dob": "1970-01-01"
+            #}
+            #users.insert_one(new_user)
+            return render_template("register.html")
+        else:
+            return render_template("login.html")
 
 # Loads page
 # when form is submitted, update user and reload page
@@ -83,11 +104,25 @@ def settings():
         return render_template("settings.html")
     else:
         return render_template("settings.html")
-
-
-# @app.route('/<name>/')
-# def user(name):
-#     return render_template("index.html", content=[name])
+      
+@app.route('/register_form', methods=["GET", "POST"])
+def register_form():
+    if request.method == "POST":
+        new_user = {
+            "username": request.form.get("username"),
+            "password": request.form.get("password"),
+            "weight": request.form.get("weight"),
+            "height": request.form.get("height"),
+            "activity_level": request.form.get("activity_level"),
+            "diet": request.form.get("diet"),
+            "gender": request.form.get("gender"),
+            "dob": request.form.get("dob")
+        }
+        if(users.count_documents({"username" : request.form.get("username")}) == 0 and users.count_documents({"password" : request.form.get("password")}) == 0):
+            users.insert_one(new_user)
+            return render_template("testing_homepage.html")
+        else:
+            return "That login information is already taken!"
 
 
 if __name__ == "__main__":
