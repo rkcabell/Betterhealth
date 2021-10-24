@@ -1,7 +1,9 @@
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, session
+from flask.ctx import has_request_context
+from flask_session import Session
 app = Flask(__name__)
 
-#from database import dblogin
+from database import db_login, db_update_settings
 
 import pymongo
 import pprint
@@ -14,8 +16,6 @@ from pymongo import ReturnDocument
     All logic should be sent to other .py files for processing
 '''
 
-# Home page
-
 client = MongoClient()
 db = client.bhealth
 users = db.users
@@ -24,10 +24,6 @@ history = db.history
 @app.route('/')
 def home():
     return render_template("testing_homepage.html")
-
-@app.route('/login')
-def login():
-    return render_template("login.html")
 
 @app.route('/register')
 def register():
@@ -47,9 +43,8 @@ def recipes():
 
 
 
-
-@app.route('/handle_form', methods=["GET", "POST"])
-def handle_form():
+@app.route('/login', methods=["GET", "POST"])
+def login():
     # Testing get form data
     if request.method == "POST":
         if request.form.get('submitbutton') == 'signin':
@@ -57,16 +52,11 @@ def handle_form():
             username = request.form.get("username")
             # password
             password = request.form.get("password")
-            #return "Your name is " + username + " and your password is " + password
-            #if dblogin(username, password) != "None":
-            #doc = users.find_one({"username" : username})
-            if users.find_one({"username" : username}) == users.find_one({"password" : password}) and users.count_documents({"username" : username}) > 0 and users.count_documents({"password" : password}) > 0:
-                return render_template("testing_homepage.html")
-            else:
-                #users.delete_many({ "username": {"$regex": "^w"} })
-                #for data in users.find():
-                #    print(data)
+            verify_login = db_login(username, password)
+            if verify_login == False:
                 return "Invalid login information"
+            # Set user to CURRENT USER
+            return render_template("testing_homepage.html")
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
             #    "username": request.form.get("username"),
@@ -80,9 +70,41 @@ def handle_form():
             #}
             #users.insert_one(new_user)
             return render_template("register.html")
+        else:
+            return render_template("login.html")
 
-# For json data EXAMPLE
+# Loads page
+# when form is submitted, update user and reload page
+@app.route('/settings', methods=["GET", "POST"])
+def settings():
+    if request.method == "POST":
+        weight = request.form.get("input_weight")
+        height = request.form.get("input_height")
+        dob = request.form.get("input_dob")
+        # value = female, male, other
+        if 'gender' in request.form:
+            gender = request.form['gender']
+        else:
+            gender = None
+        # value = sedentary, light, moderate, heavy
+        if 'activity' in request.form:
+            activity_level = request.form['activity']
+        else:
+            activity_level = None
+        # value = regular, vegan, vegetarian
+        if 'diet' in request.form:
+            diet = request.form['diet']
+        else:
+            diet = None
 
+        settings = [weight, height, dob, gender, activity_level, diet]
+
+        verify_update = db_update_settings(settings)
+        print("Update succeeded: " + str(verify_update))
+        return render_template("settings.html")
+    else:
+        return render_template("settings.html")
+      
 @app.route('/register_form', methods=["GET", "POST"])
 def register_form():
     if request.method == "POST":
@@ -101,31 +123,6 @@ def register_form():
             return render_template("testing_homepage.html")
         else:
             return "That login information is already taken!"
-
-
-@app.route('/json-example', methods=['POST'])
-def json_example():
-    request_data = request.get_json()
-
-    language = request_data['language']
-    framework = request_data['framework']
-
-    # two keys are needed because of the nested object
-    python_version = request_data['version_info']['python']
-
-    # an index is needed because of the array
-    example = request_data['examples'][0]
-
-    boolean_test = request_data['boolean_test']
-
-    return ''
-
-# pass in page as var
-
-
-# @app.route('/<name>/')
-# def user(name):
-#     return render_template("index.html", content=[name])
 
 
 if __name__ == "__main__":
