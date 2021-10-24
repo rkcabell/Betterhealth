@@ -67,20 +67,36 @@ def handle_form():
                     print(data)
                 return "Invalid login information"
         elif request.form.get('submitbutton') == 'register':
-            new_user = {
-                "username": request.form.get("username"),
-                "password": request.form.get("password"),
-                "weight": 0,
-                "height": 0,
-                "activity_level": "SEDENTARY",
-                "diet": "NO_RESTRICTIONS",
-                "gender": "OTHER",
-                "dob": "1970-01-01"
-            }
-            users.insert_one(new_user)
-            return render_template("login.html")
+            #new_user = {
+            #    "username": request.form.get("username"),
+            #    "password": request.form.get("password"),
+            #    "weight": 0,
+            #    "height": 0,
+            #    "activity_level": "SEDENTARY",
+            #    "diet": "NO_RESTRICTIONS",
+            #    "gender": "OTHER",
+            #    "dob": "1970-01-01"
+            #}
+            #users.insert_one(new_user)
+            return render_template("register.html")
 
 # For json data EXAMPLE
+
+@app.route('/register_form', methods=["GET", "POST"])
+def register_form():
+    if request.method == "POST":
+        new_user = {
+            "username": request.form.get("username"),
+            "password": request.form.get("password"),
+            "weight": request.form.get("weight"),
+            "height": request.form.get("height"),
+            "activity_level": request.form.get("activity_level"),
+            "diet": request.form.get("diet"),
+            "gender": request.form.get("gender"),
+            "dob": request.form.get("dob")
+        }
+        users.insert_one(new_user)
+        return render_template("testing_homepage.html")
 
 
 @app.route('/json-example', methods=['POST'])

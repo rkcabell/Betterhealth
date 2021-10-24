@@ -9,11 +9,93 @@
     has only a form
 -->
 {% block content %}
-<form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-</form>
-{% endblock %}
+
+
+
+<!-- Top div section -->
+<div class="header">
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-4"></div>
+                <!-- X button -->
+                <h1>Welcome to Better Health</h1>
+                <h3>A better way to live</h3>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- main section for login elements and form-->
+<div class="container">
+    <div class="row">
+        <!-- Dummy col for spacing -->
+        <div class="col-1">
+        </div>
+
+        <!-- Center column with stuff -->
+        <div class="col">
+
+            <section class="container-gray">
+                <class class="container-gray">
+                    <h1>Sign In</h1>
+
+                    <form action='/register_form' method="POST">
+                        <label for="username"><b>Username</b></label>
+                        <input class="form-control" name="username" id="username" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="password"><b>Password</b></label>
+                        <input class="form-control" name="password" id="password" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="weight"><b>Weight</b></label>
+                        <input class="form-control" name="weight" id="weight" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="height"><b>Height</b></label>
+                        <input class="form-control" name="height" id="height" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="activity_level"><b>Activity Level</b></label>
+                        <input class="form-control" name="activity_level" id="activity_level" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="diet"><b>Diet</b></label>
+                        <input class="form-control" name="diet" id="diet" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="gender"><b>Gender</b></label>
+                        <input class="form-control" name="gender" id="gender" style="width: 50%" required>
+                        <p class="space"></p>
+
+                        <label for="dob"><b>Date of Birth</b></label>
+                        <input class="form-control" name="dob" id="dob" style="width: 50%;" required>
+                        
+
+                        <div class="clearfix">
+                            <button class="btn btn-primary" type="submit" name="submitbutton" value="register">Register</button>
+                        </div>
+                    </form>
+            </section>
+
+            <!-- bottom section for modal and registering-->
+            
+
+                <script>
+                    // Get the modal
+                    var modal = document.getElementById('register');
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                </script>
+            </section>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+                crossorigin="anonymous"></script>
+            {% endblock %}
