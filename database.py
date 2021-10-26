@@ -3,12 +3,13 @@
 # bulk inserts, bulk querying, count num of documents,
 # advanced queries, indexing(ascending)
 
+from flask.templating import render_template
 import pymongo
 import pprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
-from pass_sec import encrypt_password
+from pass_sec import encrypt_password, check_encrypted_password
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -36,8 +37,7 @@ db = client.bhealth
 users = db.users
 history = db.history
 
-# REPLACE
-CURRENT_USER_ID = db.users.find_one({"_id": "2332532rqef3"})
+CURRENT_USER_ID = db.users.find_one({"_id": "me"})
 
 def db_getUsersTable():
     return users
@@ -48,8 +48,13 @@ def db_getHistoryTable():
 # Matches the username to the password in the db
 # returns true if user exists, otherwise false
 def db_login(username, password):
-    login_attempt = {"username": username, "password": encrypt_password(password)}
+
+    login_attempt = {"username": username}
     user = users.find_one(login_attempt)
+    if check_encrypted_password(user.password, encrypt_password(password)):
+        print("password check passed")
+    print("User: " + str(user))
+    print("\nAttempted to log into: " + str(login_attempt))
     if user is None:
         return False
     return True
@@ -98,6 +103,8 @@ def assign_constants(settings):
         elif(x == "vegetarian"):
             x = VEGETARIAN
     return settings
+
+
 '''
 Example of user collection
 user = {
@@ -154,8 +161,6 @@ db.list_collection_names()
 # for x in users.find():
 #  print(x)
 
-myquery = {"height": 0}
-mydoc = users.find(myquery)
 # for x in mydoc:
 #  print(x)
 

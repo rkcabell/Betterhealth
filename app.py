@@ -5,12 +5,6 @@ app = Flask(__name__)
 
 from database import *
 
-import pymongo
-import pprint
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-from pymongo import ReturnDocument
-
 sess = Session()
 sess.init_app(app)
 
@@ -55,6 +49,7 @@ def login():
             if verify_login == False:
                 return "Invalid login information"
             # Set user to CURRENT USER
+            session['username'] = username
             return render_template("testing_homepage.html")
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
@@ -108,7 +103,7 @@ def register_form():
     if request.method == "POST":
         new_user = {
             "username": request.form.get("username"),
-            "password": request.form.get("password"),
+            "password": encrypt_password(request.form.get("password")),
             "weight": request.form.get("weight"),
             "height": request.form.get("height"),
             "activity_level": request.form.get("activity_level"),
@@ -122,6 +117,10 @@ def register_form():
         else:
             return "That login information is already taken!"
 
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return render_template('/login')
 
 if __name__ == "__main__":
     app.run(debug=True)
