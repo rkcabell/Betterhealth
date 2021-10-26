@@ -36,7 +36,14 @@ db = client.bhealth
 users = db.users
 history = db.history
 
+# REPLACE
 CURRENT_USER_ID = db.users.find_one({"_id": "2332532rqef3"})
+
+def db_getUsersTable():
+    return users
+
+def db_getHistoryTable():
+    return history
 
 # Matches the username to the password in the db
 # returns true if user exists, otherwise false
@@ -53,7 +60,7 @@ def db_login(username, password):
 def db_update_settings(settings):
     updated_settings = []
     setting_elems = ["weight", "height", "dob", "gender", "activity", "diet"]
-    print(settings)
+    print("Inputted settings: " + str(settings))
     # make string settings into constants
     settings = assign_constants(settings)
     for i in range(len(settings)):
@@ -62,33 +69,34 @@ def db_update_settings(settings):
             {"$set": {setting_elems[i] : settings[i]}})
             # store updated settings to return
             updated_settings.append(settings[i])
-    print(updated_settings)
+    print("Changed settings: " + str(updated_settings))
     return updated_settings
 
 # make the settings into the proper constant names
 def assign_constants(settings):
-    if(settings[4] == "sedentary"):
-        settings[4] = SEDENTARY
-    elif(settings[4] == "light"):
-        settings[4] = LIGHT
-    elif(settings[4] == "moderate"):
-        settings[4] = MODERATE
-    elif(settings[4] == "heavy"):
-        settings[4] = HEAVY
+    for x in settings:
+        if(x == "sedentary"):
+            x = SEDENTARY
+        elif(x == "light"):
+            x = LIGHT
+        elif(x == "moderate"):
+            x = MODERATE
+        elif(x == "heavy"):
+            x = HEAVY
 
-    if(settings[3] == "female"):
-        settings[3] = FEMALE
-    elif(settings[3] == "male"):
-        settings[3] = MALE
-    elif(settings[3] == "other"):
-        settings[3] = OTHER
+        if(x == "female"):
+            x = FEMALE
+        elif(x == "male"):
+            x = MALE
+        elif(x == "other"):
+            x = OTHER
 
-    if(settings[5] == "regular"):
-        settings[5] = NO_RESTRICTIONS
-    elif(settings[5] == "vegan"):
-        settings[5] = VEGAN
-    elif(settings[5] == "vegetarian"):
-        settings[5] = VEGETARIAN
+        if(x == "regular"):
+            x = NO_RESTRICTIONS
+        elif(x == "vegan"):
+            x = VEGAN
+        elif(x == "vegetarian"):
+            x = VEGETARIAN
     return settings
 '''
 Example of user collection

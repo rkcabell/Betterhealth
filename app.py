@@ -3,7 +3,7 @@ from flask.ctx import has_request_context
 from flask_session import Session
 app = Flask(__name__)
 
-from database import db_login, db_update_settings
+from database import *
 
 import pymongo
 import pprint
@@ -11,15 +11,14 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 
+sess = Session()
+sess.init_app(app)
+
+users = db_getUsersTable()
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
 '''
-
-client = MongoClient()
-db = client.bhealth
-users = db.users
-history = db.history
 
 @app.route('/')
 def home():
