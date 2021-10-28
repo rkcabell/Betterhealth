@@ -7,6 +7,9 @@ from database import *
 
 sess = Session()
 sess.init_app(app)
+SESSION_TYPE = 'mongodb'
+app.config.from_object(__name__)
+Session(app)
 
 users = db_getUsersTable()
 '''

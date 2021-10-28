@@ -50,13 +50,16 @@ def db_getHistoryTable():
 def db_login(username, password):
 
     login_attempt = {"username": username}
-    user = users.find_one(login_attempt)
-    if check_encrypted_password(user.password, encrypt_password(password)):
-        print("password check passed")
-    print("User: " + str(user))
-    print("\nAttempted to log into: " + str(login_attempt))
-    if user is None:
+    user_found = users.find_one(login_attempt)
+    print("\nAttempting to log into: " + str(login_attempt))
+    if user_found is None:
         return False
+    real_pass = user_found["password"]
+    print("\nAttempting to check password: " + str(real_pass))
+    if check_encrypted_password(real_pass, encrypt_password(password)):
+        print("password check passed")
+    
+    print("User: " + str(user_found))
     return True
 
 # update the settings applied on settings page
