@@ -55,12 +55,11 @@ def db_login(username, password):
     if user_found is None:
         return False
     real_pass = user_found["password"]
-    print("\nAttempting to check password: " + str(real_pass))
-    if check_encrypted_password(real_pass, encrypt_password(password)):
+    print("\nAttempting to check password: \n" + "real:  " + str(real_pass) + "\n" + "input: " + str(encrypt_password(password)))
+    if check_encrypted_password(password, real_pass):
         print("password check passed")
-    
-    print("User: " + str(user_found))
-    return True
+        return True
+    return False
 
 # update the settings applied on settings page
 # Parameters: list of updated settings from app.py

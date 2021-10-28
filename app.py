@@ -6,10 +6,10 @@ app = Flask(__name__)
 from database import *
 
 sess = Session()
-sess.init_app(app)
-SESSION_TYPE = 'mongodb'
+app.config['SESSION_TYPE'] = 'mongodb'
 app.config.from_object(__name__)
 Session(app)
+sess.init_app(app)
 
 users = db_getUsersTable()
 '''
@@ -53,6 +53,7 @@ def login():
                 return "Invalid login information"
             # Set user to CURRENT USER
             session['username'] = username
+
             return render_template("testing_homepage.html")
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
