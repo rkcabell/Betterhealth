@@ -45,20 +45,20 @@ def db_getUsersTable():
 def db_getHistoryTable():
     return history
 
-# Matches the username to the password in the db
+# Finds a doc in the database such that password matches for given username
 # returns true if user exists, otherwise false
 def db_login(username, password):
-
     login_attempt = {"username": username}
     user_found = users.find_one(login_attempt)
     print("\nAttempting to log into: " + str(login_attempt))
     if user_found is None:
+        print("That user doesn't exist")
         return False
     real_pass = user_found["password"]
-    print("\nAttempting to check password: \n" + "real:  " + str(real_pass) + "\n" + "input: " + str(encrypt_password(password)))
     if check_encrypted_password(password, real_pass):
         print("password check passed")
         return True
+    print("password check failed")
     return False
 
 # update the settings applied on settings page
@@ -105,6 +105,9 @@ def assign_constants(settings):
         elif(x == "vegetarian"):
             x = VEGETARIAN
     return settings
+
+def db_register():
+    return False
 
 
 '''
