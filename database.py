@@ -11,6 +11,7 @@ from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from pass_sec import encrypt_password, check_encrypted_password
 from app import session
+from datetime import datetime
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -122,6 +123,34 @@ def db_update_history():
 ########################################## HISTORY TABLE UPDATES ##########################################
 # takes int
 def db_update_calorie_goal(x):
+    curr_calorie_goal = history.find_one({"_id": CURRENT_USER_ID})['calorie_goal']
+    if curr_calorie_goal is None:
+        user = users.find_one({"_id": CURRENT_USER_ID})
+        gender = user['gender']
+        weight = user['weight']
+        height = user['height']
+        activity_level = user['activity_level']
+        dob = user['dob'].split("-")
+        age = get_age(dob)
+
+        # FEMALE
+        # 655 + (9.6 X weight in kg) + (1.8 x height in cm) – (4.7 x age in yrs)
+        if gender == 0:
+            x = 655 + (9.6 + weight) + (1.8 * height) - (4.7 * age)
+        # MALE OR OTHER
+        # 66 + (13.7 X weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
+        elif gender == 1 or gender == 2:
+            x = 66 + (13.7 + weight) + (5 * height) - (6.8 * age)
+
+        if activity_level == 0:
+            x *= 1.2
+        elif activity_level == 1: 
+            x *= 1.375
+        elif activity_level == 2: 
+            x *= 1.55
+        elif activity_level == 3: 
+            x *= 1.725
+
     history.find_one_and_update({"_id": CURRENT_USER_ID},
         {"$set": {"calorie_goal" : x}})
 
@@ -140,20 +169,27 @@ def db_update_water_tracked(x):
 def db_update_eaten_cals(x):
     curr_eaten_cals = history.find_one({"_id": CURRENT_USER_ID})['eaten_cals']
     history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"water_goal" : x + curr_eaten_cals}})
+        {"$set": {"eaten_cals" : x + curr_eaten_cals}})
 
 # only increases, this number is subtracted from eaten to show daily cals
 def db_update_workout_cals(x):
     curr_workout_cals = history.find_one({"_id": CURRENT_USER_ID})['workout_cals']
     history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"water_goal" : x + curr_workout_cals}})
+        {"$set": {"workout_cals" : x + curr_workout_cals}})
 
 # takes string as last workout method
 def db_update_last_workout(str_method):
     history.find_one_and_update({"_id": CURRENT_USER_ID},
         {"$set": {"last_workout" : str_method}})
 
-########################################## END ##########################################
+########################################## OTHER ##########################################
+
+def get_age(dob):
+    dob = [int(numeric_string) for numeric_string in dob]
+    today = datetime.today().strftime('%Y-%m-%d')
+    today = [int(numeric_string) for numeric_string in today]
+    age = today[0] - dob[0] - ((today[1], today[2]) < (dob[1], dob[2]))
+    return age
 '''
 Example of user collection
 user = {
