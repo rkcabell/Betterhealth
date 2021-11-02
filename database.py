@@ -10,6 +10,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from pass_sec import encrypt_password, check_encrypted_password
+from app import session
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -37,13 +38,17 @@ db = client.bhealth
 users = db.users
 history = db.history
 
-CURRENT_USER_ID = db.users.find_one({"_id": "me"})
+if 'username' in session:
+    username = session['username']
+    CURRENT_USER_ID = users.find_one({"username": username})['_id']
 
 def db_getUsersTable():
     return users
 
 def db_getHistoryTable():
     return history
+
+########################################## LOGIN ##########################################
 
 # Finds a doc in the database such that password matches for given username
 # returns true if user exists, otherwise false
@@ -60,6 +65,8 @@ def db_login(username, password):
         return True
     print("password check failed")
     return False
+
+########################################## SETTINGS UPDATES ##########################################
 
 # update the settings applied on settings page
 # Parameters: list of updated settings from app.py
@@ -109,7 +116,44 @@ def assign_constants(settings):
 def db_register():
     return False
 
+def db_update_history():
+    return 
+    False
+########################################## HISTORY TABLE UPDATES ##########################################
+# takes int
+def db_update_calorie_goal(x):
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"calorie_goal" : x}})
 
+# takes int
+def db_update_water_goal(x):
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"water_goal" : x}})
+
+# takes int
+def db_update_water_tracked(x):
+    curr_water_tracked = history.find_one({"_id": CURRENT_USER_ID})['water_tracked']
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"water_tracked" : x + curr_water_tracked}})
+
+# only increases, to decrease use workout
+def db_update_eaten_cals(x):
+    curr_eaten_cals = history.find_one({"_id": CURRENT_USER_ID})['eaten_cals']
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"water_goal" : x + curr_eaten_cals}})
+
+# only increases, this number is subtracted from eaten to show daily cals
+def db_update_workout_cals(x):
+    curr_workout_cals = history.find_one({"_id": CURRENT_USER_ID})['workout_cals']
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"water_goal" : x + curr_workout_cals}})
+
+# takes string as last workout method
+def db_update_last_workout(str_method):
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"last_workout" : str_method}})
+
+########################################## END ##########################################
 '''
 Example of user collection
 user = {
@@ -161,7 +205,7 @@ history.insert_one(history_instance)
 # get inserted unique id
 #user_id = users.insert_one(user).inserted_id
 
-db.list_collection_names()
+#db.list_collection_names()
 
 # for x in users.find():
 #  print(x)

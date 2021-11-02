@@ -101,6 +101,7 @@ def settings():
         return render_template("settings.html")
     else:
         return render_template("settings.html")
+
       
 @app.route('/register_form', methods=["GET", "POST"])
 def register_form():
