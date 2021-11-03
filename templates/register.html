@@ -103,17 +103,32 @@
                         <input class="form-control" name="height" id="height" type="number" style="width: 50%" required>
                         <p class="space"></p>
 
-                        <label for="activity_level"><b>Activity Level</b></label>
-                        <input class="form-control" name="activity_level" id="activity_level" style="width: 50%" required>
-                        <p class="space"></p>
+                        <select class="custom-select" id="activity_level" style = "width: 50%">
+                            <option selected>Select your current activity level...</option>
+                            <option value="0">Sedentary</option>
+                            <option value="1">Light</option>
+                            <option value="2">Moderate</option>
+                            <option value="3">Heavy</option>
+                          </select>
 
-                        <label for="diet"><b>Diet</b></label>
-                        <input class="form-control" name="diet" id="diet" style="width: 50%" required>
-                        <p class="space"></p>
+                          <br><br/>
 
-                        <label for="gender"><b>Gender</b></label>
-                        <input class="form-control" name="gender" id="gender" style="width: 50%" required>
-                        <p class="space"></p>
+                          <select class="custom-select" id="diet" style = "width: 50%">
+                            <option selected>Select your current diet...</option>
+                            <option value="0">No restrictions</option>
+                            <option value="1">Vegetarian</option>
+                            <option value="2">Vegan</option>
+                          </select>
+
+                          <br><br/>
+
+                          <select class="custom-select" id="gender" style = "width: 50%">
+                            <option selected>Select your current gender...</option>
+                            <option value="0">Female</option>
+                            <option value="1">Male</option>
+                          </select>
+
+                          <br><br/>
 
                         <label for="dob"><b>Date of Birth</b></label>
                         <input class="form-control" name="dob" id="dob" type="date" style="width: 50%;" required>
