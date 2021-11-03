@@ -6,6 +6,7 @@ import secrets
 secret = secrets.token_urlsafe(16)
 app = Flask(__name__)
 from database import *
+from calorie_api import *
 
 sess = Session()
 app.config['SESSION_TYPE'] = 'mongodb'
@@ -135,6 +136,17 @@ def register_form():
 def logout():
     session.pop('username', None)
     return render_template('/login')
+
+@app.route('/testing_calorie/')
+def index():
+    return render_template('testing_calorie.html')
+
+
+@app.route('/testing_calorie/', methods=['POST'])
+def getvalue():
+    ingredient = request.form['ingredient']
+    cals = calorie_calc(ingredient)
+    return render_template('testing_calorie.html', ingredient=ingredient, cals=cals)
 
 if __name__ == "__main__":
     app.run(debug=True)
