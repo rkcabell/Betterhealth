@@ -1,5 +1,5 @@
-import requests
-import json
+#import requests
+#import json
 #from json.decoder import JSONDecodeError
 
 #gets summary from ID
@@ -15,10 +15,10 @@ import json
 #print(data['title'])
 
 #American
-response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
-data = response.json()
+#response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+#data = response.json()
 #print(data['title'])
-print(data['image'])
+#print(data['image'])
 #print(data['instructions'])
 #print()
 

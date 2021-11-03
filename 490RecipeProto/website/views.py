@@ -18,13 +18,6 @@ def home():
    data3 = json.loads(response3.content)
    return render_template("recipeChange.html", data = data ,data2 = data2,data3 = data3)
 
-@views.route('/', methods = ['GET','POST'])
-def remove_html_tags(text):
-   """Remove html tags from a string"""
-   import re
-   clean = re.compile('<.*?>')
-   return re.sub(clean, '', text)
-
  
 @views.route('/french/',methods=['GET','POST'])
 def next1():
