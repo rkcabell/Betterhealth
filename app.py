@@ -40,6 +40,10 @@ def homepage():
 def profile():
     return render_template("profile_setup.html")
 
+@app.route('/testing_workout')
+def workout():
+    return render_template("testing_workout.html")
+
 @app.route('/testing_recipes')
 def recipes():
     return render_template("testing_recipes.html")
