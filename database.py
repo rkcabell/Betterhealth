@@ -10,8 +10,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
 from pass_sec import encrypt_password, check_encrypted_password
-from app import session
 from datetime import datetime
+
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -39,15 +39,12 @@ db = client.bhealth
 users = db.users
 history = db.history
 
-if 'username' in session:
-    username = session['username']
-    CURRENT_USER_ID = users.find_one({"username": username})['_id']
 
 def db_getUsersTable():
-    return users
+    return db.users
 
 def db_getHistoryTable():
-    return history
+   return db.history
 
 ########################################## LOGIN ##########################################
 
@@ -72,7 +69,12 @@ def db_login(username, password):
 # update the settings applied on settings page
 # Parameters: list of updated settings from app.py
 # Returns: list of only the settings that were nonempty
-def db_update_settings(settings):
+def db_update_settings(settings, CURRENT_USER):
+    if CURRENT_USER is not None:
+        CURRENT_USER_ID = CURRENT_USER['_id']
+    else:
+        print("CURRENT_USER: " + str(CURRENT_USER))
+        return False
     updated_settings = []
     setting_elems = ["weight", "height", "dob", "gender", "activity", "diet"]
     print("Inputted settings: " + str(settings))

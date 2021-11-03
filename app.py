@@ -1,17 +1,21 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 from flask.ctx import has_request_context
 from flask_session import Session
-app = Flask(__name__)
+import secrets
 
+secret = secrets.token_urlsafe(16)
+app = Flask(__name__)
 from database import *
 
 sess = Session()
 app.config['SESSION_TYPE'] = 'mongodb'
+app.config["SECRET_KEY"] = secret
 app.config.from_object(__name__)
-Session(app)
-sess.init_app(app)
+
+CURRENT_USER = None
 
 users = db_getUsersTable()
+history = db_getHistoryTable()
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
@@ -41,20 +45,19 @@ def recipes():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    # Testing get form data
+    # if user hits submit button
     if request.method == "POST":
         if request.form.get('submitbutton') == 'signin':
-            # name = email in HTML form under login page
             username = request.form.get("username")
-            # password
             password = request.form.get("password")
             verify_login = db_login(username, password)
             if verify_login == False:
                 return "Invalid login information"
             # Set user to CURRENT USER
             session['username'] = username
-
-            return render_template("testing_homepage.html")
+            CURRENT_USER = users.find_one({'username': username})
+            # pass current user into homepage
+            return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
             #    "username": request.form.get("username"),
@@ -75,30 +78,36 @@ def login():
 @app.route('/settings', methods=["GET", "POST"])
 def settings():
     if request.method == "POST":
-        weight = request.form.get("input_weight")
-        height = request.form.get("input_height")
-        dob = request.form.get("input_dob")
-        # value = female, male, other
-        if 'gender' in request.form:
-            gender = request.form['gender']
-        else:
-            gender = None
-        # value = sedentary, light, moderate, heavy
-        if 'activity' in request.form:
-            activity_level = request.form['activity']
-        else:
-            activity_level = None
-        # value = regular, vegan, vegetarian
-        if 'diet' in request.form:
-            diet = request.form['diet']
-        else:
-            diet = None
+        if 'username' in session:
+            curr_user = users.find_one({'username': session['username']})
+            weight = request.form.get("input_weight")
+            height = request.form.get("input_height")
+            dob = request.form.get("input_dob")
+            # value = female, male, other
+            if 'gender' in request.form:
+                gender = request.form['gender']
+            else:
+                gender = None
+            # value = sedentary, light, moderate, heavy
+            if 'activity' in request.form:
+                activity_level = request.form['activity']
+            else:
+                activity_level = None
+            # value = regular, vegan, vegetarian
+            if 'diet' in request.form:
+                diet = request.form['diet']
+            else:
+                diet = None
 
-        settings = [weight, height, dob, gender, activity_level, diet]
-
-        verify_update = db_update_settings(settings)
-        print("Update succeeded: " + str(verify_update))
-        return render_template("settings.html")
+            settings = [weight, height, dob, gender, activity_level, diet]
+            print(session)
+            verify_update = db_update_settings(settings, curr_user)
+            print("Update succeeded: " + str(verify_update))
+            return render_template("settings.html")
+        # username not in session, return to login
+        else:
+            return render_template("login.html")
+    # load settings when form not submitted
     else:
         return render_template("settings.html")
 
