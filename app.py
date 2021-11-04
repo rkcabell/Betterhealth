@@ -30,7 +30,7 @@ CURRENT_USER = None
 
 @app.route('/')
 def home():
-    return render_template("testing_homepage.html")
+    return render_template("login.html")
 
 @app.route('/register')
 def register():
