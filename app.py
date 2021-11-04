@@ -17,10 +17,12 @@ app.config['SESSION_TYPE'] = 'mongodb'
 app.config["SECRET_KEY"] = secret
 app.config.from_object(__name__)
 
-CURRENT_USER = None
-
 users = db_getUsersTable()
 history = db_getHistoryTable()
+
+CURRENT_USER = None
+#if 'username' in session:
+#    CURRENT_USER = users.find_one({'username': session['username']})
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
@@ -42,7 +44,11 @@ def homepage():
 def profile():
     return render_template("profile_setup.html")
 
-@app.route('/testing_recipes' , methods = ['GET','POST'])
+@app.route('/testing_workout')
+def workout():
+    return render_template("testing_workout.html")
+
+@app.route('/testing_recipes', methods = ['GET','POST'])
 def recipes():
   response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
   response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
@@ -127,6 +133,7 @@ def login():
             # Set user to CURRENT USER
             session['username'] = username
             CURRENT_USER = users.find_one({'username': username})
+            db_get_current_user(CURRENT_USER)
             # pass current user into homepage
             return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
@@ -150,7 +157,6 @@ def login():
 def settings():
     if request.method == "POST":
         if 'username' in session:
-            curr_user = users.find_one({'username': session['username']})
             weight = request.form.get("input_weight")
             height = request.form.get("input_height")
             dob = request.form.get("input_dob")
@@ -172,7 +178,7 @@ def settings():
 
             settings = [weight, height, dob, gender, activity_level, diet]
             print(session)
-            verify_update = db_update_settings(settings, curr_user)
+            verify_update = db_update_settings(settings)
             print("Update succeeded: " + str(verify_update))
             return render_template("settings.html")
         # username not in session, return to login

@@ -3,6 +3,7 @@
 # bulk inserts, bulk querying, count num of documents,
 # advanced queries, indexing(ascending)
 
+from flask.globals import current_app
 from flask.templating import render_template
 import pymongo
 import pprint
@@ -12,6 +13,8 @@ from pymongo import ReturnDocument
 from pass_sec import encrypt_password, check_encrypted_password
 from datetime import datetime
 
+CURRENT_USER = None
+CURRENT_USER_ID = None
 
 
 # Constants for 'activity_level' in bhealth.users.activity_level
@@ -46,6 +49,11 @@ def db_getUsersTable():
 def db_getHistoryTable():
    return db.history
 
+def db_get_current_user(curr_user):
+    global CURRENT_USER
+    global CURRENT_USER_ID
+    CURRENT_USER = curr_user
+    CURRENT_USER_ID = curr_user['_id']
 ########################################## LOGIN ##########################################
 
 # Finds a doc in the database such that password matches for given username
@@ -69,7 +77,7 @@ def db_login(username, password):
 # update the settings applied on settings page
 # Parameters: list of updated settings from app.py
 # Returns: list of only the settings that were nonempty
-def db_update_settings(settings, CURRENT_USER):
+def db_update_settings(settings):
     if CURRENT_USER is not None:
         CURRENT_USER_ID = CURRENT_USER['_id']
     else:
