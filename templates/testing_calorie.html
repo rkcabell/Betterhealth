@@ -81,6 +81,13 @@ function success() {
             document.getElementById('button').disabled = false;
         }
     }
+
+    document.getElementById("button").addEventListener("click", myFunction);
+        function myFunction() {
+          if(document.getElementById("return_cals") == "invalid")
+          alert ("You submitted");
+        }
+
 </script>
 
 
@@ -147,7 +154,7 @@ function success() {
             {{ingredient}}
           </div>
           <div class="col">
-            <input  type="text" value={{cals}} "" aria-label="readonly input example" readonly>
+            <input  type="text" id="return_cals" value={{cals}} "" aria-label="readonly input example" readonly>
           </div>
           <div class="col">
         </div>
