@@ -49,7 +49,7 @@ def db_getUsersTable():
 def db_getHistoryTable():
    return db.history
 
-def db_get_current_user(curr_user):
+def db_set_current_user(curr_user):
     global CURRENT_USER
     global CURRENT_USER_ID
     CURRENT_USER = curr_user

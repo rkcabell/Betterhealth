@@ -135,7 +135,7 @@ def login():
             # Set user to CURRENT USER
             session['username'] = username
             CURRENT_USER = users.find_one({'username': username})
-            db_get_current_user(CURRENT_USER)
+            db_set_current_user(CURRENT_USER)
             # pass current user into homepage
             return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
@@ -209,7 +209,7 @@ def register_form():
             username = request.form.get("username")
             session['username'] = username
             CURRENT_USER = users.find_one({'username': username})
-            db_get_current_user(CURRENT_USER)
+            db_set_current_user(CURRENT_USER)
             return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         else:
             return "That login information is already taken!"
@@ -219,16 +219,28 @@ def logout():
     session.pop('username', None)
     return render_template('login.html')
 
-@app.route('/testing_calorie/')
-def index():
-    return render_template('testing_calorie.html')
-
-
-@app.route('/testing_calorie/', methods=['POST'])
+@app.route('/calorie', methods=['POST'])
 def getvalue():
-    ingredient = request.form['ingredient']
-    cals = calorie_calc(ingredient)
-    return render_template('testing_calorie.html', ingredient=ingredient, cals=cals)
+    print("1")
+    if request.method == "POST":
+        print("2")
+        curr_user = CURRENT_USER
+        user_hist = history.find_one({"_id": curr_user["_id"]})
+        cal_goal = user_hist["calorie_goal"]
+        ingredient = request.form['ingredient']
+        cals = calorie_calc(ingredient)
+        print("3")
+        return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
+    else:
+        print("4")
+        return render_template('calorie.html')
+def index():
+    print("5")
+    curr_user = CURRENT_USER
+    user_hist = history.find_one({"_id": curr_user["_id"]})
+    cal_goal = user_hist["calorie_goal"]
+    print("6")
+    return render_template('calorie.html', calorie_goal=cal_goal)
 
 if __name__ == "__main__":
     app.run(debug=True)
