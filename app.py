@@ -206,7 +206,11 @@ def register_form():
         }
         if(users.count_documents({"username" : request.form.get("username")}) == 0 and users.count_documents({"password" : request.form.get("password")}) == 0):
             users.insert_one(new_user)
-            return render_template("testing_homepage.html")
+            username = request.form.get("username")
+            session['username'] = username
+            CURRENT_USER = users.find_one({'username': username})
+            db_get_current_user(CURRENT_USER)
+            return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         else:
             return "That login information is already taken!"
 
