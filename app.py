@@ -217,7 +217,7 @@ def register_form():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return render_template('/login')
+    return render_template('login.html')
 
 @app.route('/testing_calorie/')
 def index():
