@@ -5,7 +5,7 @@ import secrets
 import json
 import requests
 
-
+key = ""
 
 secret = secrets.token_urlsafe(16)
 app = Flask(__name__)
@@ -50,9 +50,11 @@ def workout():
 
 @app.route('/testing_recipes', methods = ['GET','POST'])
 def recipes():
-  response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-  response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-  response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+  global key
+  key = "f602c24d536945e6b0a9d94748614609"
+  response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey="+ str(key))
+  response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey="+ str(key))
+  response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey="+ str(key))
   data = json.loads(response.content)
   data2 = json.loads(response2.content)
   data3 = json.loads(response3.content)
@@ -61,9 +63,9 @@ def recipes():
  
 @app.route('/testing_recipes/french',methods=['GET','POST'])
 def next1():
-   response = requests.get("https://api.spoonacular.com/recipes/650239/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/650239/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
@@ -71,9 +73,9 @@ def next1():
 
 @app.route('/testing_recipes/japanese',methods=['GET','POST'])
 def next2():
-   response = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/11772/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/11772/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
@@ -81,9 +83,9 @@ def next2():
 
 @app.route('/testing_recipes/chinese',methods=['GET','POST'])
 def next3():
-   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/91894/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/91894/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
@@ -91,9 +93,9 @@ def next3():
 
 @app.route('/testing_recipes/spanish',methods=['GET','POST'])
 def next4():
-   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
@@ -101,9 +103,9 @@ def next4():
 
 @app.route('/testing_recipes/italian',methods=['GET','POST'])
 def next5():
-   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
@@ -111,9 +113,9 @@ def next5():
 
 @app.route('/testing_recipes/european',methods=['GET','POST'])
 def next6():
-   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
-   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=6b34aa15afef46d29e32d0c5adf63cd6")
+   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
+   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
