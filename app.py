@@ -490,6 +490,10 @@ def logout():
     session.pop('username', None)
     return render_template('login.html')
 
+@app.route('/calorie')
+def index():
+    return render_template('alorie.html')
+
 @app.route('/calorie/', methods=['POST'])
 def getvalue():
     print("1")
