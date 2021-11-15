@@ -492,7 +492,6 @@ def logout():
 
 @app.route('/calorie', methods=['GET'])
 def index():
-<<<<<<< HEAD
     #if request.method == "POST":
 
     username = session['username'] 
@@ -508,12 +507,6 @@ def index():
     #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
    # else:
        # return render_template('calorie.html')
-=======
-    curr_user = CURRENT_USER
-    user_hist = history.find_one({"_id": curr_user["_id"]})
-    cal_goal = user_hist["calorie_goal"]
-    return render_template('calorie.html', calorie_goal=cal_goal)
->>>>>>> 4c0d17bb3eb25afa5766af7700b3f0aa097319b5
 
 @app.route('/calorie', methods=['POST'])
 def getvalue():
