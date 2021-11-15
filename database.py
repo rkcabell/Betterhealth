@@ -215,30 +215,31 @@ user = {
 
 '''
 
-'''
-current_user_id = ObjectId('616ce97e7225695d911646aa')
+
+current_user_id = CURRENT_USER_ID
 current_user_settings = db.users.find_one({'_id': current_user_id})
 current_user_history = db.history.find_one_and_update(
     {'_id': current_user_id},
     {'$set': {'linked': True}},
     upsert=True,
     return_document=ReturnDocument.AFTER)
-'''
+
 # get data from HTML form
 # can be replaced with separate update methods
-'''
+
 history_instance = {
     "eaten_cals": 1,
     "workout_cals": 0,
     "calorie_goal": 2000,
-    "water_tracked": 500,
+    "water_tracked": 600,
     "water_goal": 3000,
-    "last_workout": "bike",
+    "last_workout": "running",
     "linked": False
 }
 
 history.insert_one(history_instance)
-'''
+print("added profle to history table")
+
 # users.insert_one(user)
 #users.update_one({'_id': '616cc83d32d3b6e1c7121e62'},  {"$set": user}, upsert=True)
 
