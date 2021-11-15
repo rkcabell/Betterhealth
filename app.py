@@ -493,18 +493,18 @@ def logout():
 @app.route('/calorie')
 def index():
     print("1")
-    if request.method == "POST":
-        print("2")
-        curr_user = CURRENT_USER
-        user_hist = history.find_one({"_id": curr_user["_id"]})
-        cal_goal = user_hist["calorie_goal"]
-        ingredient = request.form['ingredient']
-        cals = calorie_calc(ingredient)
-        print("3")
-        return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
-    else:
-        print("4")
-        return render_template('calorie.html')
+    #if request.method == "POST":
+       # print("2")
+    curr_user = CURRENT_USER
+    user_hist = history.find_one({"_id": curr_user["_id"]})
+    cal_goal = user_hist["calorie_goal"]
+    ingredient = request.form['ingredient']
+    cals = calorie_calc(ingredient)
+    print("3")
+    return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
+   # else:
+       # print("4")
+       # return render_template('calorie.html')
 
 @app.route('/calorie', methods=['POST'])
 def getvalue():
