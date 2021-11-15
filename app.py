@@ -490,7 +490,7 @@ def logout():
     session.pop('username', None)
     return render_template('login.html')
 
-@app.route('/calorie')
+@app.route('/calorie', methods=['GET'])
 def index():
     #if request.method == "POST":
 
