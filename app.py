@@ -492,7 +492,7 @@ def logout():
 
 @app.route('/calorie')
 def index():
-    return render_template('alorie.html')
+    return render_template('calorie.html')
 
 @app.route('/calorie/', methods=['POST'])
 def getvalue():
