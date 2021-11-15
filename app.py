@@ -7,6 +7,7 @@ import requests
 
 #key = ""
 global key
+global CURRENT_USER
 #key = "f602c24d536945e6b0a9d94748614609"
 key = "6b34aa15afef46d29e32d0c5adf63cd6"
 #key =  "f6333c76ce7148d4b3b22172e8267b65"
@@ -25,8 +26,7 @@ users = db_getUsersTable()
 history = db_getHistoryTable()
 
 CURRENT_USER = None
-#if 'username' in session:
-#    CURRENT_USER = users.find_one({'username': session['username']})
+
 '''
     Main python app that runs the flask server and loads html pages.
     All logic should be sent to other .py files for processing
@@ -492,18 +492,20 @@ def logout():
 
 @app.route('/calorie')
 def index():
-    print("1")
     #if request.method == "POST":
-       # print("2")
-    curr_user = CURRENT_USER
-    user_hist = history.find_one({"_id": curr_user["_id"]})
+
+    username = session['username'] 
+    CURRENT_USER = users.find_one({'username': username})
+    db_set_current_user(CURRENT_USER)
+    #CURRENT_USER works here
+    user_hist = history.find_one({"_id": CURRENT_USER["_id"]})
+    print(user_hist)
     cal_goal = user_hist["calorie_goal"]
     ingredient = request.form['ingredient']
     cals = calorie_calc(ingredient)
-    print("3")
-    return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
+    return render_template('calorie.html', calorie_goal=cal_goal)
+    #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
    # else:
-       # print("4")
        # return render_template('calorie.html')
 
 @app.route('/calorie', methods=['POST'])
