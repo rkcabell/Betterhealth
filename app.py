@@ -5,7 +5,11 @@ import secrets
 import json
 import requests
 
-key = ""
+#key = ""
+global key
+#key = "f602c24d536945e6b0a9d94748614609"
+key = "6b34aa15afef46d29e32d0c5adf63cd6"
+#key =  "f6333c76ce7148d4b3b22172e8267b65"
 
 secret = secrets.token_urlsafe(16)
 app = Flask(__name__)
@@ -48,78 +52,345 @@ def profile():
 def workout():
     return render_template("testing_workout.html")
 
+def strip(text):
+ text= text.replace("<ol>","").replace("<li>","").replace("</li>","").replace("</ol>","").replace("<b>","").replace("</b>","").replace("<a>","").replace("</a>","").replace("<a href=","").replace(">","").replace(";","")
+ return text
+
 @app.route('/testing_recipes', methods = ['GET','POST'])
 def recipes():
-  global key
-  key = "f602c24d536945e6b0a9d94748614609"
-  response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey="+ str(key))
-  response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey="+ str(key))
-  response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey="+ str(key))
-  data = json.loads(response.content)
-  data2 = json.loads(response2.content)
-  data3 = json.loads(response3.content)
-  return render_template("testing_recipes.html", data = data ,data2 = data2,data3 = data3)
+   response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/"
+   href2 = "/a/"
+   href3 = "/a2/"
+   title = "American"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
- 
-@app.route('/testing_recipes/french',methods=['GET','POST'])
-def next1():
+@app.route('/a/', methods = ['GET','POST'])
+def recipiesA2():
+   response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/"
+   href2 = "/a/"
+   href3 = "/a2/"
+   title = "American"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/a2/', methods = ['GET','POST'])
+def recipiesA3():
+   response = requests.get("https://api.spoonacular.com/recipes/636243/information?includeNutrition=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642178/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664080/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/"
+   href2 = "/a/"
+   href3 = "/a2/"
+   title = "American"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/french/',methods=['GET','POST'])
+def recipiesF1():
    response = requests.get("https://api.spoonacular.com/recipes/650239/information?includeInstructions=true&apiKey=" + key)
-   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/french/"
+   href2 = "/french2/"
+   href3 = "/french3/"
+   title = "French"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
-@app.route('/testing_recipes/japanese',methods=['GET','POST'])
-def next2():
-   response = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response2 = requests.get("https://api.spoonacular.com/recipes/11772/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+@app.route('/french2/',methods=['GET','POST'])
+def recipiesF2():
+   response = requests.get("https://api.spoonacular.com/recipes/650239/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/french/"
+   href2 = "/french2/"
+   href3 = "/french3/"
+   title = "French"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
-@app.route('/testing_recipes/chinese',methods=['GET','POST'])
-def next3():
-   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/91894/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+@app.route('/french3/',methods=['GET','POST'])
+def recipiesF3():
+   response = requests.get("https://api.spoonacular.com/recipes/650239/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648641/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/664689/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/french/"
+   href2 = "/french2/"
+   href3 = "/french3/"
+   title = "French"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
-@app.route('/testing_recipes/spanish',methods=['GET','POST'])
-def next4():
-   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+@app.route('/japanese/',methods=['GET','POST'])
+def recipiesJ1():
+   response = requests.get("https://api.spoonacular.com/recipes/1590307/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/japanese/"
+   href2 = "/japanese2/"
+   href3 = "/japanese3/"
+   title = "Japanese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
-@app.route('/testing_recipes/italian',methods=['GET','POST'])
-def next5():
-   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+@app.route('/japanese2/',methods=['GET','POST'])
+def recipiesJ2():
+   response = requests.get("https://api.spoonacular.com/recipes/1590307/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/japanese/"
+   href2 = "/japanese2/"
+   href3 = "/japanese3/"
+   title = "Japanese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
-@app.route('/testing_recipes/european',methods=['GET','POST'])
-def next6():
-   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=f602c24d536945e6b0a9d94748614609")
-   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=f602c24d536945e6b0a9d94748614609")
+@app.route('/japanese3/',methods=['GET','POST'])
+def recipiesJ3():
+   response = requests.get("https://api.spoonacular.com/recipes/1590307/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/648500/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/660493/information?includeInstructions=false&apiKey=" + key)
    data = json.loads(response.content)
    data2 = json.loads(response2.content)
    data3 = json.loads(response3.content)
-   return render_template("testing_recipes.html", data = data,data2 = data2, data3 =data3)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/japanese/"
+   href2 = "/japanese2/"
+   href3 = "/japanese3/"
+   title = "Japanese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/chinese/',methods=['GET','POST'])
+def recipiesC1():
+   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/969270/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/chinese/"
+   href2 = "/chinese2/"
+   href3 = "/chinese3/"
+   title = "Chinese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/chinese2/',methods=['GET','POST'])
+def recipiesC2():
+   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/969270/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/chinese/"
+   href2 = "/chinese2/"
+   href3 = "/chinese3/"
+   title = "Chinese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/chinese3/',methods=['GET','POST'])
+def recipiesC3():
+   response = requests.get("https://api.spoonacular.com/recipes/644826/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/918033/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/969270/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/chinese/"
+   href2 = "/chinese2/"
+   href3 = "/chinese3/"
+   title = "Chinese"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/spanish/',methods=['GET','POST'])
+def recipiesS1():
+   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/spanish/"
+   href2 = "/spanish2/"
+   href3 = "/spanish3/"
+   title = "Spanish"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/spanish2/',methods=['GET','POST'])
+def recipiesS2():
+   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/spanish/"
+   href2 = "/spanish2/"
+   href3 = "/spanish3/"
+   title = "Spanish"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/spanish3/',methods=['GET','POST'])
+def recipiesS3():
+   response = requests.get("https://api.spoonacular.com/recipes/660868/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/1095794/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/632706/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/spanish/"
+   href2 = "/spanish2/"
+   href3 = "/spanish3/"
+   title = "Spanish"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/italian/',methods=['GET','POST'])
+def recipiesI1():
+   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/italian/"
+   href2 = "/italian2/"
+   href3 = "/italian3/"
+   title = "Italian"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/italian2/',methods=['GET','POST'])
+def recipiesI2():
+   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/italian/"
+   href2 = "/italian2/"
+   href3 = "/italian3/"
+   title = "Italian"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/italian3/',methods=['GET','POST'])
+def recipiesI3():
+   response = requests.get("https://api.spoonacular.com/recipes/636910/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/642722/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/658544/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/italian/"
+   href2 = "/italian2/"
+   href3 = "/italian3/"
+   title = "Italian"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/european/',methods=['GET','POST'])
+def recipiesE1():
+   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data['instructions'])
+   DSumm1 = strip(data['summary'])
+   href1 = "/european/"
+   href2 = "/european2/"
+   href3 = "/european3/"
+   title = "European"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/european2/',methods=['GET','POST'])
+def recipiesE2():
+   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data2['instructions'])
+   DSumm1 = strip(data2['summary'])
+   href1 = "/european/"
+   href2 = "/european2/"
+   href3 = "/european3/"
+   title = "European"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
+
+@app.route('/european3/',methods=['GET','POST'])
+def recipiesE3():
+   response = requests.get("https://api.spoonacular.com/recipes/715495/information?includeInstructions=true&apiKey=" + key)
+   response2 = requests.get("https://api.spoonacular.com/recipes/658515/information?includeInstructions=true&apiKey=" + key)
+   response3 = requests.get("https://api.spoonacular.com/recipes/644885/information?includeInstructions=false&apiKey=" + key)
+   data = json.loads(response.content)
+   data2 = json.loads(response2.content)
+   data3 = json.loads(response3.content)
+   DInstruc1 = strip(data3['instructions'])
+   DSumm1 = strip(data3['summary'])
+   href1 = "/european/"
+   href2 = "/european2/"
+   href3 = "/european3/"
+   title = "European"
+   return render_template("testing_recipes.html",DInstruc1 = DInstruc1,DSumm1=DSumm1, data = data ,data2 = data2,data3 = data3,href1 = href1,href2 = href2,href3 = href3,title = title)
 
 
 @app.route('/login', methods=["GET", "POST"])

@@ -10,10 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <title>Recipes</title>
+    <title>bootstrap Recipes</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+   
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/style.css')}}">
+  
 
 </head>
 
@@ -47,9 +49,7 @@
                     </li>
                 </ul>
             </div>
-
     </nav>
-<br/>
 
     <div class="container">
         <div class="row gx-5">
@@ -74,20 +74,19 @@
                         Choose a cuisine 
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="/testing_recipes">American</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/french" >French</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/japanese">Japanese</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/chinese">Chinese</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/spanish">Spanish</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/italian">Italian</a></li>
-                        <li><a class="dropdown-item" href="/testing_recipes/european">European</a></li>
+                        <li><a class="dropdown-item" href="/">American</a></li>
+                        <li><a class="dropdown-item" href="/french/" >French</a></li>
+                        <li><a class="dropdown-item" href="/japanese/">Japanese</a></li>
+                        <li><a class="dropdown-item" href="/chinese/">Chinese</a></li>
+                        <li><a class="dropdown-item" href="/spanish/">Spanish</a></li>
+                        <li><a class="dropdown-item" href="/italian/">Italian</a></li>
+                        <li><a class="dropdown-item" href="/european/">Europen</a></li>
 
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Separated
-                                link</a></li>
+                  
                     </ul>
+                </div>
+                <div class="container pb-3 ps-1">
+                    <h3>Current cuisine chosen: {{title}}</h3>
                 </div>
                 <!--picture cards for different recipes-->
                 <div class="card-group">
@@ -99,7 +98,7 @@
                             <p class="card-text"> For calories and additional information visit <a href= {{data.spoonacularSourceUrl}}></href> Here </a></p>
                         </div>
                         <div class="card-footer text-center">
-                            <a href="" id="button1" class="btn btn-outline-info" aria-current="page">Select</a>
+                            <a href={{href1}} id="button1" class="btn btn-outline-info" aria-current="page">Select</a>
                         </div>
                     </div>
                     <div class="card">
@@ -110,7 +109,7 @@
                             <p class="card-text"> For calories and additional information visit <a href= {{data2.spoonacularSourceUrl}}></href> Here </a> </p>
                         </div>
                         <div class="card-footer text-center" action="/result" method="POST">
-                            <a href="" id="button2" class="btn btn-outline-info"  aria-current="page">Select</a>
+                            <a href={{href2}} id="button2" class="btn btn-outline-info"  aria-current="page">Select</a>
                         </div>
                     </div>
                     <div class="card">
@@ -121,7 +120,7 @@
                             <p class="card-text"> For calories and additional information visit <a href= {{data3.spoonacularSourceUrl}}></href> Here </a>  </p>
                         </div>
                         <div class="card-footer text-center"> 
-                            <a href="" id="button3"  class="btn btn-outline-info"  aria-current="page">Select</a>
+                            <a href={{href3}}  id="button3"  class="btn btn-outline-info"  aria-current="page">Select</a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +139,7 @@
                     <div class="col">
                         <div class="container-bg">
                             <h3 class="text-center">Recipe:</h3>
-                            <p>  {% block p %} {{data.instructions}} {%endblock%}</p>
+                            <p>  {{DInstruc1}}</p>
                         </div>
                     </div>
 
@@ -148,7 +147,7 @@
                     <div class="col">
                         <div class="container-bg">
                             <h3 class="text-center">Description:</h3>
-                            <p>{% block p2 %} {{data.summary}} {%endblock%}</p>
+                            <p>{{DSumm1}}</p>
                         </div>
                     </div>
 
