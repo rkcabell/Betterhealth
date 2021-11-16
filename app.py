@@ -465,21 +465,42 @@ def settings():
 @app.route('/register_form', methods=["GET", "POST"])
 def register_form():
     if request.method == "POST":
+        username = request.form.get("username")
+        weight = request.form.get("weight")
+        height = request.form.get("height")
+        activity_level = request.form.get("activity_level")
+        gender = request.form.get("gender")
+        dob = request.form.get("dob")
         new_user = {
             "username": request.form.get("username"),
             "password": encrypt_password(request.form.get("password")),
-            "weight": request.form.get("weight"),
-            "height": request.form.get("height"),
-            "activity_level": request.form.get("activity_level"),
+            "weight": weight,
+            "height": height,
+            "activity_level": activity_level,
             "diet": request.form.get("diet"),
-            "gender": request.form.get("gender"),
-            "dob": request.form.get("dob")
+            "gender": gender,
+            "dob": dob
         }
+        
         if(users.count_documents({"username" : request.form.get("username")}) == 0 and users.count_documents({"password" : request.form.get("password")}) == 0):
             users.insert_one(new_user)
             username = request.form.get("username")
             session['username'] = username
             CURRENT_USER = users.find_one({'username': username})
+            new_user_hist = {
+            "_id": CURRENT_USER["_id"],
+            "calorie_goal": db_set_default_calorie_goal(weight, height, activity_level, gender, dob),
+            "water_goal": db_update_water_goal(64),
+            "eaten_cals": db_update_eaten_cals(0),
+            "water_tracked": db_update_water_tracked(0),
+            "workout_cals": db_update_workout_cals(0),
+            "last_workout": db_update_last_workout(""),
+            "weight_goal": db_update_weight_goal(0),
+            "linked": db_update_linked(True)
+        }
+            history.insert_one(new_user_hist)
+           
+            
             db_set_current_user(CURRENT_USER)
             return render_template("testing_homepage.html", curr_user=CURRENT_USER)
         else:
