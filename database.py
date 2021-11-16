@@ -10,6 +10,7 @@ import pprint
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from pymongo import ReturnDocument
+from pymongo.results import UpdateResult
 from pass_sec import encrypt_password, check_encrypted_password
 from datetime import datetime
 
@@ -134,69 +135,81 @@ def db_update_history():
 # takes int
 def db_update_calorie_goal(x):
     curr_calorie_goal = history.find_one({"_id": CURRENT_USER_ID})['calorie_goal']
-    if curr_calorie_goal is None:
-        user = users.find_one({"_id": CURRENT_USER_ID})
-        gender = user['gender']
-        weight = user['weight']
-        height = user['height']
-        activity_level = user['activity_level']
-        dob = user['dob'].split("-")
-        age = get_age(dob)
-
-        # FEMALE
-        # 655 + (9.6 X weight in kg) + (1.8 x height in cm) – (4.7 x age in yrs)
-        if gender == 0:
-            x = 655 + (9.6 + weight) + (1.8 * height) - (4.7 * age)
-        # MALE OR OTHER
-        # 66 + (13.7 X weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
-        elif gender == 1 or gender == 2:
-            x = 66 + (13.7 + weight) + (5 * height) - (6.8 * age)
-
-        if activity_level == 0:
-            x *= 1.2
-        elif activity_level == 1: 
-            x *= 1.375
-        elif activity_level == 2: 
-            x *= 1.55
-        elif activity_level == 3: 
-            x *= 1.725
-
     history.find_one_and_update({"_id": CURRENT_USER_ID},
         {"$set": {"calorie_goal" : x}})
+
+def db_set_default_calorie_goal(weight, height, activity_level, gender, dob):
+    gender = gender
+    weight = weight
+    height = height
+    activity_level = activity_level
+    dob = dob.split("-")
+    print(dob)
+    age = get_age(dob)
+
+    # FEMALE
+    # 655 + (9.6 X weight in kg) + (1.8 x height in cm) – (4.7 x age in yrs)
+    if gender == 0:
+        x = 655 + (9.6 + int(weight)) + (1.8 * int(height)) - (4.7 * age)
+    # MALE OR OTHER
+    # 66 + (13.7 X weight in kg) + (5 x height in cm) – (6.8 x age in yrs)
+    else:
+        x = 66 + (13.7 + int(weight)) + (5 * int(height)) - (6.8 * age)
+
+    if activity_level == 0:
+        x *= 1.2
+    elif activity_level == 1: 
+        x *= 1.375
+    elif activity_level == 2: 
+        x *= 1.55
+    else : 
+        x *= 1.725
+
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"calorie_goal" : x}}, upsert=True)
 
 # takes int
 def db_update_water_goal(x):
     history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"water_goal" : x}})
+        {"$set": {"water_goal" : x}}, upsert=True)
 
 # takes int
 def db_update_water_tracked(x):
-    curr_water_tracked = history.find_one({"_id": CURRENT_USER_ID})['water_tracked']
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"water_tracked" : x + curr_water_tracked}})
+        if history.find_one({"_id": CURRENT_USER_ID}):
+            curr = history.find_one({"_id": CURRENT_USER_ID})
+            curr.update({"$set": {"water_tracked" : x}}, upsert=True)
 
 # only increases, to decrease use workout
 def db_update_eaten_cals(x):
-    curr_eaten_cals = history.find_one({"_id": CURRENT_USER_ID})['eaten_cals']
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"eaten_cals" : x + curr_eaten_cals}})
+        if history.find_one({"_id": CURRENT_USER_ID}):
+            curr = history.find_one({"_id": CURRENT_USER_ID})
+            curr.update({"$set": {"eaten_cals" : x + curr['eaten_cals']}}, upsert=True)
 
 # only increases, this number is subtracted from eaten to show daily cals
 def db_update_workout_cals(x):
-    curr_workout_cals = history.find_one({"_id": CURRENT_USER_ID})['workout_cals']
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"workout_cals" : x + curr_workout_cals}})
+        if history.find_one({"_id": CURRENT_USER_ID}):
+            curr = history.find_one({"_id": CURRENT_USER_ID})
+            curr.update({"$set": {"workout_cals" : x}}, upsert=True)
 
 # takes string as last workout method
 def db_update_last_workout(str_method):
     history.find_one_and_update({"_id": CURRENT_USER_ID},
-        {"$set": {"last_workout" : str_method}})
+        {"$set": {"last_workout" : str_method}}, upsert=True)
+
+def db_update_linked(bool):
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"linked" : bool}}, upsert=True)
+
+def db_update_weight_goal(x):
+    history.find_one_and_update({"_id": CURRENT_USER_ID},
+        {"$set": {"weight_goal": x}}, upsert=True)
 
 ########################################## OTHER ##########################################
 
 def get_age(dob):
     dob = [int(numeric_string) for numeric_string in dob]
     today = datetime.today().strftime('%Y-%m-%d')
+    today = today.split("-")
     today = [int(numeric_string) for numeric_string in today]
     age = today[0] - dob[0] - ((today[1], today[2]) < (dob[1], dob[2]))
     return age
