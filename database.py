@@ -175,9 +175,8 @@ def db_update_water_goal(x, curr_id):
 
 # takes int
 def db_update_water_tracked(x, curr_id):
-        if history.find_one({"_id": curr_id}):
-            curr = history.find_one({"_id": curr_id})
-            curr.update_one({"$set": {"water_tracked" : x}}, upsert=True)
+            history.find_one_and_update({"_id": curr_id},
+                {"$set": {"water_tracked" : x}}, upsert=True)
 
 # only increases, to decrease use workout
 def db_update_eaten_cals(x, curr_id):
@@ -194,9 +193,8 @@ def db_remove_eaten_cals(x, curr_id):
 
 # only increases, this number is subtracted from eaten to show daily cals
 def db_update_workout_cals(x ,curr_id):
-        if history.find_one({"_id": curr_id}):
-            curr = history.find_one({"_id": curr_id})
-            curr.update_one({"$set": {"workout_cals" : x}}, upsert=True)
+            history.find_one_and_update({"_id": curr_id},
+                {"$set": {"workout_cals" : x}}, upsert=True)
 
 # takes string as last workout method
 def db_update_last_workout(str_method, curr_id):
