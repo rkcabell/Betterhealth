@@ -185,6 +185,12 @@ def db_update_eaten_cals(x, curr_id):
             y = curr["eaten_cals"]
             history.find_one_and_update({"_id": curr_id},
                 {"$set": {"eaten_cals" : x+y}}, upsert=True)
+            
+def db_remove_eaten_cals(x, curr_id):
+            curr = history.find_one({"_id": curr_id})
+            y = curr["eaten_cals"]
+            history.find_one_and_delete({"_id": curr_id},
+                {"$set": {"eaten_cals" : y-x}}, upsert=True)
 
 # only increases, this number is subtracted from eaten to show daily cals
 def db_update_workout_cals(x ,curr_id):
