@@ -52,6 +52,24 @@ def profile():
 def workout():
     return render_template("testing_workout.html")
 
+
+@app.route('/testing_profilepic')
+def profilepic():
+    return render_template("testing_profilepic.html")
+
+@app.route('/testing_password')
+def password():
+    return render_template("testing_password.html")
+
+@app.route('/test_notifications')
+def notification():
+    return render_template("test_notifications.html")
+
+@app.route('/testing_username')
+def username():
+    return render_template("testing_username.html")
+    
+
 def strip(text):
  text= text.replace("<ol>","").replace("<li>","").replace("</li>","").replace("</ol>","").replace("<b>","").replace("</b>","").replace("<a>","").replace("</a>","").replace("<a href=","").replace(">","").replace(";","")
  return text
