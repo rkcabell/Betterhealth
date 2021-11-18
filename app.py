@@ -466,40 +466,55 @@ def settings():
 def register_form():
     if request.method == "POST":
         username = request.form.get("username")
+        password = encrypt_password(request.form.get("password"))
         weight = request.form.get("weight")
         height = request.form.get("height")
         activity_level = request.form.get("activity_level")
         gender = request.form.get("gender")
         dob = request.form.get("dob")
+        diet = request.form.get("diet")
         new_user = {
-            "username": request.form.get("username"),
-            "password": encrypt_password(request.form.get("password")),
+            "username": username,
+            "password": password,
             "weight": weight,
             "height": height,
             "activity_level": activity_level,
-            "diet": request.form.get("diet"),
+            "diet": diet,
             "gender": gender,
             "dob": dob
         }
         
-        if(users.count_documents({"username" : request.form.get("username")}) == 0 and users.count_documents({"password" : request.form.get("password")}) == 0):
+
+        if(users.count_documents({"username" : request.form.get("username")}) == 0) :
             users.insert_one(new_user)
-            username = request.form.get("username")
             session['username'] = username
             CURRENT_USER = users.find_one({'username': username})
+            CURRENT_USER_ID = CURRENT_USER["_id"]
             new_user_hist = {
-            "_id": CURRENT_USER["_id"],
-            "calorie_goal": db_set_default_calorie_goal(weight, height, activity_level, gender, dob),
-            "water_goal": db_update_water_goal(64),
-            "eaten_cals": db_update_eaten_cals(0),
-            "water_tracked": db_update_water_tracked(0),
-            "workout_cals": db_update_workout_cals(0),
-            "last_workout": db_update_last_workout(""),
-            "weight_goal": db_update_weight_goal(0),
-            "linked": db_update_linked(True)
-        }
+                "_id": CURRENT_USER_ID,
+                "calorie_goal": 0,
+                "water_goal": 0,
+                "eaten_cals": 0,
+                "water_tracked": 0,
+                "workout_cals": 0,
+                "last_workout": "None",
+                "weight_goal": 0,
+                "linked": False
+            }
+            
             history.insert_one(new_user_hist)
-           
+            print(history.find_one({"_id": CURRENT_USER_ID}))
+
+            db_set_default_calorie_goal(weight, height, activity_level, gender, dob, CURRENT_USER_ID),
+            db_update_water_goal(64,CURRENT_USER_ID),
+            db_update_eaten_cals(0,CURRENT_USER_ID),
+            db_update_water_tracked(0,CURRENT_USER_ID),
+            db_update_workout_cals(0,CURRENT_USER_ID),
+            db_update_last_workout("None",CURRENT_USER_ID),
+            db_update_weight_goal(0,CURRENT_USER_ID),
+            db_update_linked(True,CURRENT_USER_ID)
+
+            print(history.find_one({"_id": CURRENT_USER_ID}))
             
             db_set_current_user(CURRENT_USER)
             return render_template("testing_homepage.html", curr_user=CURRENT_USER)

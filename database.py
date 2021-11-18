@@ -133,12 +133,12 @@ def db_update_history():
     False
 ########################################## HISTORY TABLE UPDATES ##########################################
 # takes int
-def db_update_calorie_goal(x):
-    curr_calorie_goal = history.find_one({"_id": CURRENT_USER_ID})['calorie_goal']
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+def db_update_calorie_goal(x, curr_id):
+    curr_calorie_goal = history.find_one({"_id": curr_id})['calorie_goal']
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"calorie_goal" : x}})
 
-def db_set_default_calorie_goal(weight, height, activity_level, gender, dob):
+def db_set_default_calorie_goal(weight, height, activity_level, gender, dob, curr_id):
     gender = gender
     weight = weight
     height = height
@@ -165,44 +165,46 @@ def db_set_default_calorie_goal(weight, height, activity_level, gender, dob):
     else : 
         x *= 1.725
 
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"calorie_goal" : x}}, upsert=True)
 
 # takes int
-def db_update_water_goal(x):
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+def db_update_water_goal(x, curr_id):
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"water_goal" : x}}, upsert=True)
 
 # takes int
-def db_update_water_tracked(x):
-        if history.find_one({"_id": CURRENT_USER_ID}):
-            curr = history.find_one({"_id": CURRENT_USER_ID})
+def db_update_water_tracked(x, curr_id):
+        if history.find_one({"_id": curr_id}):
+            curr = history.find_one({"_id": curr_id})
             curr.update({"$set": {"water_tracked" : x}}, upsert=True)
 
 # only increases, to decrease use workout
-def db_update_eaten_cals(x):
-        if history.find_one({"_id": CURRENT_USER_ID}):
-            curr = history.find_one({"_id": CURRENT_USER_ID})
-            curr.update({"$set": {"eaten_cals" : x + curr['eaten_cals']}}, upsert=True)
+def db_update_eaten_cals(x, curr_id):
+        if history.find_one({"_id": curr_id}):
+            curr = history.find_one({"_id": curr_id})
+            y = curr["eaten_cals"]
+            curr.update({"$set": {"eaten_cals" : x + y}}, upsert=True)
 
 # only increases, this number is subtracted from eaten to show daily cals
-def db_update_workout_cals(x):
-        if history.find_one({"_id": CURRENT_USER_ID}):
-            curr = history.find_one({"_id": CURRENT_USER_ID})
+def db_update_workout_cals(x ,curr_id):
+        if history.find_one({"_id": curr_id}):
+            curr = history.find_one({"_id": curr_id})
             curr.update({"$set": {"workout_cals" : x}}, upsert=True)
 
 # takes string as last workout method
-def db_update_last_workout(str_method):
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+def db_update_last_workout(str_method, curr_id):
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"last_workout" : str_method}}, upsert=True)
 
-def db_update_linked(bool):
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+def db_update_linked(bool, curr_id):
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"linked" : bool}}, upsert=True)
 
-def db_update_weight_goal(x):
-    history.find_one_and_update({"_id": CURRENT_USER_ID},
+def db_update_weight_goal(x, curr_id):
+    history.find_one_and_update({"_id": curr_id},
         {"$set": {"weight_goal": x}}, upsert=True)
+
 
 ########################################## OTHER ##########################################
 
