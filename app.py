@@ -522,8 +522,8 @@ def index():
     user_hist = history.find_one({"_id": CURRENT_USER["_id"]})
     print(user_hist)
     cal_goal = user_hist["calorie_goal"]
-    ingredient = request.form['ingredient']
-    cals = calorie_calc(ingredient)
+    #ingredient = request.form['ingredient']
+    #cals = calorie_calc(ingredient)
     return render_template('calorie.html', calorie_goal=cal_goal)
     #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
    # else:
