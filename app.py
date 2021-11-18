@@ -526,39 +526,39 @@ def logout():
     session.pop('username', None)
     return render_template('login.html')
 
-@app.route('/calorie', methods=['GET'])
+@app.route('/calorie', methods=['GET', 'POST'])
 def index():
-    #if request.method == "POST":
-
     username = session['username'] 
     CURRENT_USER = users.find_one({'username': username})
-    db_set_current_user(CURRENT_USER)
-    #CURRENT_USER works here
-    user_hist = history.find_one({"_id": CURRENT_USER["_id"]})
-    print(user_hist)
-    cal_goal = user_hist["calorie_goal"]
-    #ingredient = request.form['ingredient']
-    #cals = calorie_calc(ingredient)
-    return render_template('calorie.html', calorie_goal=cal_goal)
-    #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
-   # else:
-       # return render_template('calorie.html')
-
-@app.route('/calorie', methods=['POST'])
-def getvalue():
-    print("1")
-    if request.method == "POST":
-        print("2")
+    if request.method == "GET":
+        db_set_current_user(CURRENT_USER)
+        #CURRENT_USER works here
+        user_hist = history.find_one({"_id": CURRENT_USER["_id"]})
+        print(user_hist)
+        cal_goal = user_hist["calorie_goal"]
+        cals_consumed = user_hist["eaten_cals"]
+        cals_remaining =cal_goal-cals_consumed
+        #ingredient = request.form['ingredient']
+        #cals = calorie_calc(ingredient)
+        return render_template('calorie.html', calorie_goal=cal_goal, cals=0, cals_consumed=cals_consumed, cals_remaining=cals_remaining)
+        #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
+    # else:
+        # return render_template('calorie.html')
+    elif request.method == "POST":
         curr_user = CURRENT_USER
         user_hist = history.find_one({"_id": curr_user["_id"]})
         cal_goal = user_hist["calorie_goal"]
         ingredient = request.form['ingredient']
         cals = calorie_calc(ingredient)
-        print("3")
-        return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
+        db_update_eaten_cals(cals, curr_user["_id"])
+        cals_consumed = user_hist["eaten_cals"]
+        cals_remaining =cal_goal-cals_consumed
+        return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
     else:
-        print("4")
         return render_template('calorie.html')
+
+
+        
 #def index():
   #  print("5")
    # curr_user = CURRENT_USER
