@@ -551,7 +551,7 @@ def index():
         ingredient = request.form['ingredient']
         cals = calorie_calc(ingredient)
         if cals == "Invalid Entry: Check spelling and format":
-            return render_template('calorie.html')
+            return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals, calorie_goal=cal_goal, cals_remaining=cals)
         db_update_eaten_cals(cals, CURRENT_USER_ID)
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
