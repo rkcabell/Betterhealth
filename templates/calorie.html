@@ -83,6 +83,19 @@ function success() {
     }
 
 </script>
+
+<script>
+function remove() {
+	 if(document.getElementById("textsend").value==="") { 
+            document.getElementById('button2').disabled = true; 
+        } else { 
+            document.getElementById('button2').disabled = false;
+        }
+    }
+
+</script>
+
+
     <div class="cal_goal_container">
         <div class="row align-items-center">
           <div class="col">
@@ -129,6 +142,7 @@ function success() {
           <form name="passdata" id="form" action="/calorie" method="POST">
             <input type="text" id="textsend" onkeyup="success()" name="ingredient" placeholder="e.g. 1 cup of rice">
             <button class="btn btn-success" id="button" type="submit" disabled>Submit</button>
+            <button class="btn btn-undo" id="button2" type="submit" disabled>Undo</button>
             </form>
           </div>
           <div class="col">
