@@ -8,9 +8,10 @@ import requests
 #key = ""
 global key
 global CURRENT_USER
-#key = "f602c24d536945e6b0a9d94748614609"
 key = "6b34aa15afef46d29e32d0c5adf63cd6"
+#key = "f602c24d536945e6b0a9d94748614609"
 #key =  "f6333c76ce7148d4b3b22172e8267b65"
+#key = "97e98c830bfa454bb029aa4abc86343a"
 
 secret = secrets.token_urlsafe(16)
 app = Flask(__name__)
