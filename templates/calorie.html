@@ -76,19 +76,10 @@
 <script>
 function success() {
 	 if(document.getElementById("textsend").value==="") { 
-            document.getElementById('button').disabled = true; 
+            document.getElementById('button').disabled = true;
+            document.getElementById('button2').disabled = true;  
         } else { 
             document.getElementById('button').disabled = false;
-        }
-    }
-
-</script>
-
-<script>
-function remove() {
-	 if(document.getElementById("textsend").value==="") { 
-            document.getElementById('button2').disabled = true; 
-        } else { 
             document.getElementById('button2').disabled = false;
         }
     }
