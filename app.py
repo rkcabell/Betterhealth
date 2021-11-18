@@ -530,10 +530,11 @@ def logout():
 def index():
     username = session['username'] 
     CURRENT_USER = users.find_one({'username': username})
+    CURRENT_USER_ID = CURRENT_USER["_id"]
     if request.method == "GET":
         db_set_current_user(CURRENT_USER)
         #CURRENT_USER works here
-        user_hist = history.find_one({"_id": CURRENT_USER["_id"]})
+        user_hist = history.find_one({"_id":CURRENT_USER_ID})
         print(user_hist)
         cal_goal = user_hist["calorie_goal"]
         cals_consumed = user_hist["eaten_cals"]
@@ -545,12 +546,11 @@ def index():
     # else:
         # return render_template('calorie.html')
     elif request.method == "POST":
-        curr_user = CURRENT_USER
-        user_hist = history.find_one({"_id": curr_user["_id"]})
+        user_hist = history.find_one({"_id": CURRENT_USER_ID})
         cal_goal = user_hist["calorie_goal"]
         ingredient = request.form['ingredient']
         cals = calorie_calc(ingredient)
-        db_update_eaten_cals(cals, curr_user["_id"])
+        db_update_eaten_cals(cals, CURRENT_USER_ID)
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
         return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
