@@ -554,8 +554,8 @@ def index():
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
         return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
-    else:
-        return render_template('calorie.html')
+    #else:
+       # return render_template('calorie.html')
 
 
         
