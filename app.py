@@ -66,7 +66,7 @@ def recipes():
    data3 = json.loads(response3.content)
    DInstruc1 = strip(data['instructions'])
    DSumm1 = strip(data['summary'])
-   href1 = "/"
+   href1 = "/testing_recipes"
    href2 = "/a/"
    href3 = "/a2/"
    title = "American"
@@ -82,7 +82,7 @@ def recipiesA2():
    data3 = json.loads(response3.content)
    DInstruc1 = strip(data2['instructions'])
    DSumm1 = strip(data2['summary'])
-   href1 = "/"
+   href1 = "/testing_recipes"
    href2 = "/a/"
    href3 = "/a2/"
    title = "American"
@@ -98,7 +98,7 @@ def recipiesA3():
    data3 = json.loads(response3.content)
    DInstruc1 = strip(data3['instructions'])
    DSumm1 = strip(data3['summary'])
-   href1 = "/"
+   href1 = "/testing_recipes"
    href2 = "/a/"
    href3 = "/a2/"
    title = "American"
