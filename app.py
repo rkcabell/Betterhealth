@@ -451,7 +451,6 @@ def settings():
         if 'username' in session:
             weight = request.form.get("input_weight")
             height = request.form.get("input_height")
-            dob = request.form.get("input_dob")
             # value = female, male, other
             if 'gender' in request.form:
                 gender = request.form['gender']
@@ -468,7 +467,7 @@ def settings():
             else:
                 diet = None
 
-            settings = [weight, height, dob, gender, activity_level, diet]
+            settings = [weight, height, gender, activity_level, diet]
             print(session)
             verify_update = db_update_settings(settings)
             print("Update succeeded: " + str(verify_update))
