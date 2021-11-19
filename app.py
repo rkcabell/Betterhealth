@@ -449,6 +449,7 @@ def login():
 def settings():
     if request.method == "POST":
         if 'username' in session:
+            CURRENT_USER = users.find_one({'username': session['username']})
             weight = request.form.get("input_weight")
             height = request.form.get("input_height")
             # value = female, male, other
