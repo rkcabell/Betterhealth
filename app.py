@@ -488,10 +488,11 @@ def workout_form():
         time = request.form.get("time")
         inputTime = request.form.get("inputTime")
         if(inputTime == "Minutes"):
-            cal = time * 460 / 60
+            cal = int(time) * 460 / 60
         else:
-            cal = time * 460
+            cal = int(time) * 4600 /10
         return render_template("testing_workout.html", cal=cal)
+    return render_template("testing_workout.html")
 
 @app.route('/register_form', methods=["GET", "POST"])
 def register_form():
