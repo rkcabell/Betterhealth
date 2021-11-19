@@ -8,9 +8,9 @@ import requests
 #key = ""
 global key
 global CURRENT_USER
-key = "6b34aa15afef46d29e32d0c5adf63cd6"
+#key = "6b34aa15afef46d29e32d0c5adf63cd6"
 #key = "f602c24d536945e6b0a9d94748614609"
-#key =  "f6333c76ce7148d4b3b22172e8267b65"
+key =  "f6333c76ce7148d4b3b22172e8267b65"
 #key = "97e98c830bfa454bb029aa4abc86343a"
 
 secret = secrets.token_urlsafe(16)
@@ -559,10 +559,7 @@ def register_form():
             print(curr_hist)
             
             db_set_current_user(CURRENT_USER)
-            weight_left = CURRENT_USER["weight"] - curr_hist["weight_goal"] 
-            calories_tracked = curr_hist["eaten_cals"] - curr_hist["workout_cals"]
-            calorie_goal = curr_hist["calorie_goal"]
-            return render_template("testing_homepage.html", username=username, weight_left=weight_left, calories_tracked=calories_tracked, calorie_goal=calorie_goal)
+            return render_template("testing_homepage.html")
         else:
             return "That login information is already taken!"
 
