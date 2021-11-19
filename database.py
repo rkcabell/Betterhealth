@@ -166,7 +166,7 @@ def db_set_default_calorie_goal(weight, height, activity_level, gender, dob, cur
         x *= 1.725
 
     history.find_one_and_update({"_id": curr_id},
-        {"$set": {"calorie_goal" : x}}, upsert=True)
+        {"$set": {"calorie_goal" : round(x)}}, upsert=True)
 
 # takes int
 def db_update_water_goal(x, curr_id):
@@ -188,13 +188,14 @@ def db_update_eaten_cals(x, curr_id):
 def db_remove_eaten_cals(x, curr_id):
             curr = history.find_one({"_id": curr_id})
             y = curr["eaten_cals"]
-            history.find_one_and_delete({"_id": curr_id},
+            history.find_one_and_update({"_id": curr_id},
                 {"$set": {"eaten_cals" : y-x}}, upsert=True)
 
 # only increases, this number is subtracted from eaten to show daily cals
 def db_update_workout_cals(x ,curr_id):
             history.find_one_and_update({"_id": curr_id},
                 {"$set": {"workout_cals" : x}}, upsert=True)
+            
 
 # takes string as last workout method
 def db_update_last_workout(str_method, curr_id):

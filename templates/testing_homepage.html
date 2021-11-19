@@ -10,9 +10,17 @@
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <title>Home page</title>
     <link rel="stylesheet" href="/static/style.css">
+
+    <script type="text/javascript">
+        var calorie_goal = curr_user["calorie_goal"];
+        var weight_left = curr_user["weight"] - curr_user["weight_goal"];
+        var calories_tracked = curr_user["eaten_cals"] - curr_user["workout_cals"];
+      </script>
+
 </head>
 
 <body>
+
     <!--Navbar-->
 
     <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
@@ -63,7 +71,7 @@
             <div class="col">
 
                 <div class="container-bg rounded">
-                    <h2>Hello</h2>
+                    <h2>Hello <span type="text" value={{username}} ""></span></h2>
 
                     <figure class="figure">
                         <div class="profile-img">
@@ -72,9 +80,9 @@
                         </div>
                     </figure>
                     <div class="blue-text">
-                        <p>Date Started:</p>
-                        <p>Weight Lost:</p>
-                        <p>Goal:</p>
+                        <p>Calorie goal: <span type="text" value={{calorie_goal}} ""></span></p>
+                        <p>Calories tracked: <span type="text" value={{calories_tracked}} ""></span></p>
+                        <p><span type="text" value={{weight_left}} ""></span> left to reach goal!</p>
 
                     </div>
 
@@ -147,12 +155,12 @@
                                             width="45">
                                         <div class="d-flex flex-column
                                                 flex-wrap ml-2"><span class="font-weight-bold">
-                                                Username </span><span class="text-black-50 time">40
+                                                Crazcatlady41@yahoo.com </span><span class="text-black-50 time">15
                                                 minutes ago</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-2 px-3"><span>I just had cheeseee</span></div>
+                            <div class="p-2 px-3"><span>I just had saladdddd</span></div>
                         </div>
                         <div class="bg-white border mt-2">
                             <div>
@@ -165,12 +173,12 @@
                                             width="45">
                                         <div class="d-flex flex-column
                                                 flex-wrap ml-2"><span class="font-weight-bold">
-                                                Username </span><span class="text-black-50 time">40
+                                                Glaberio229@gmail.com </span><span class="text-black-50 time">40
                                                 minutes ago</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-2 px-3"><span>I just had cheeseee</span></div>
+                            <div class="p-2 px-3"><span>I just had steakkkk</span></div>
                         </div>
                         <div class="bg-white border mt-2">
                             <div>
@@ -183,8 +191,8 @@
                                             width="45">
                                         <div class="d-flex flex-column
                                                 flex-wrap ml-2"><span class="font-weight-bold">
-                                                Username </span><span class="text-black-50 time">40
-                                                minutes ago</span></div>
+                                                Goofymddb@aol.net </span><span class="text-black-50 time">1
+                                                hour ago</span></div>
                                     </div>
                                 </div>
                             </div>

@@ -498,8 +498,8 @@ def workout_form():
                 cal = int(time) * 370 * int(weight) / 140
             else:
                 cal = int(time) * 460 * int(weight) / 175
-        db_update_workout_cals(cal, CURRENT_USER["_id"])
-        return render_template("testing_workout.html", cal=cal)
+        db_update_workout_cals(round(cal), CURRENT_USER["_id"])
+        return render_template("testing_workout.html", cal=round(cal))
     return render_template("testing_workout.html")
 
 @app.route('/register_form', methods=["GET", "POST"])
@@ -554,10 +554,14 @@ def register_form():
             db_update_weight_goal(0,CURRENT_USER_ID),
             db_update_linked(True,CURRENT_USER_ID)
 
-            print(history.find_one({"_id": CURRENT_USER_ID}))
+            curr_hist = (history.find_one({"_id": CURRENT_USER_ID}))
+            print(curr_hist)
             
             db_set_current_user(CURRENT_USER)
-            return render_template("testing_homepage.html", curr_user=CURRENT_USER)
+            weight_left = CURRENT_USER["weight"] - curr_hist["weight_goal"] 
+            calories_tracked = curr_hist["eaten_cals"] - curr_hist["workout_cals"]
+            calorie_goal = curr_hist["calorie_goal"]
+            return render_template("testing_homepage.html", username=username, weight_left=weight_left, calories_tracked=calories_tracked, calorie_goal=calorie_goal)
         else:
             return "That login information is already taken!"
 
