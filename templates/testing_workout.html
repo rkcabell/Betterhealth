@@ -76,24 +76,18 @@
                         <div class="container-bg ps-4 pe-4">
                             <h4>Select completed workout:</h4>
                             <!--Dropdown button-->
-                            <div class="dropdown pt-3">
+                            
 
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select a option
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item active" href="#">Biking</a></li>
-                                    <li><a class="dropdown-item" href="#">Walking</a></li>
-                                    <li><a class="dropdown-item" href="#">Running</a></li>
-                                    <li><a class="dropdown-item" href="#">Swimming</a></li>
-                                    <li><a class="dropdown-item" href="#">Dancing</a></li>
-                                    <li><a class="dropdown-item" href="#">Lifting</a></li>
-                                    <li><a class="dropdown-item" href="#">Squats</a></li>
-
-
-                                </ul>
-                            </div>
+                            <select class="custom-select" id="activity_type" style="width:60%">
+                                <option selected>Select your activity...</option>
+                                <option value="Biking">Biking</option>
+                                <option value="Walking">Walking</option>
+                                <option value="Running">Running</option>
+                                <option value="Swimming">Swimming</option>
+                                <option value="Dancing">Dancing</option>
+                                <option value="Lifting">Lifting</option>
+                                <option value="Squats">Squats</option>
+                              </select>
 
 
                             <div class="container ps-1">
@@ -107,7 +101,7 @@
                                     <div class="col-md-4">
                                         <select id="inputTime" class="form-select">
                                             <option selected>Minutes</option>
-                                            <option>Hour/s</option>
+                                            <option>Hours</option>
                                         </select>
                                     </div>
                                 </div>
@@ -147,12 +141,12 @@
                             <hr>
                             <div class="card">
                                 <div class="card-header">
-                                  Motivation Quote
+                                  Motivation
                                 </div>
                                 <div class="card-body">
                                   <blockquote class="blockquote mb-0">
-                                    <p>Try again tomorrow</p>
-                                    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">New york</cite></footer>
+                                    <p>Keep it up!</p>
+                                    
                                   </blockquote>
                                 </div>
                               </div>
