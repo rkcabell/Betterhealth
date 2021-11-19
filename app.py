@@ -498,6 +498,7 @@ def workout_form():
                 cal = int(time) * 370 * int(weight) / 140
             else:
                 cal = int(time) * 460 * int(weight) / 175
+        db_update_workout_cals(cal, CURRENT_USER["_id"])
         return render_template("testing_workout.html", cal=cal)
     return render_template("testing_workout.html")
 
