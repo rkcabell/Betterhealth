@@ -466,8 +466,8 @@ def settings():
                 diet = request.form['diet']
             else:
                 diet = None
-
-            settings = [weight, height, gender, activity_level, diet]
+            dob = CURRENT_USER["dob"]
+            settings = [weight, height, dob, gender, activity_level, diet]
             print(session)
             verify_update = db_update_settings(settings)
             print("Update succeeded: " + str(verify_update))
@@ -484,10 +484,20 @@ def workout_form():
     if request.method == "POST":
         time = request.form.get("time")
         inputTime = request.form.get("inputTime")
+        username = session['username'] 
+        CURRENT_USER = users.find_one({'username': username})
+        gender = CURRENT_USER["gender"]
+        weight = CURRENT_USER["weight"]
         if(inputTime == "Minutes"):
-            cal = int(time) * 460 / 60
+            if(gender == "0"):
+                cal = int(time) * 370 * int(weight) / (60 * 140)
+            else:
+                cal = int(time) * 460 * int(weight) / (60 * 175)
         else:
-            cal = int(time) * 4600 /10
+            if(gender == "0"):
+                cal = int(time) * 370 * int(weight) / 140
+            else:
+                cal = int(time) * 460 * int(weight) / 175
         return render_template("testing_workout.html", cal=cal)
     return render_template("testing_workout.html")
 
