@@ -74,28 +74,29 @@
                     <!--Workout container-->
                     <div class="col">
                         <div class="container-bg ps-4 pe-4">
-                            <h4>Select completed workout:</h4>
-                            <!--Dropdown button-->
+                            <form action='/workout_form' method="POST">
+                                <h4>Select completed workout:</h4>
+                                <!--Dropdown button-->
                             
 
-                            <select class="custom-select" id="activity_type" style="width:60%">
-                                <option selected>Select your activity...</option>
-                                <option value="Biking">Biking</option>
-                                <option value="Walking">Walking</option>
-                                <option value="Running">Running</option>
-                                <option value="Swimming">Swimming</option>
-                                <option value="Dancing">Dancing</option>
-                                <option value="Lifting">Lifting</option>
-                                <option value="Squats">Squats</option>
-                              </select>
+                                <select class="custom-select" id="activity_type" style="width:60%">
+                                    <option selected>Select your activity...</option>
+                                    <option value="Biking">Biking</option>
+                                    <option value="Walking">Walking</option>
+                                    <option value="Running">Running</option>
+                                    <option value="Swimming">Swimming</option>
+                                    <option value="Dancing">Dancing</option>
+                                    <option value="Lifting">Lifting</option>
+                                    <option value="Squats">Squats</option>
+                                </select>
 
 
-                            <div class="container ps-1">
-                                <h4>How long was the workout:</h4>
+                                <div class="container ps-1">
+                                    <h4>How long was the workout:</h4>
 
                                 <div class="input-group  pt-3">
 
-                                    <input type="number" class="form-control"
+                                    <input type="number" class="form-control" id="time"
                                         aria-label="Text input with dropdown button">
 
                                     <div class="col-md-4">
@@ -105,11 +106,15 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <button type="submit" class="btn btn-primary">Enter</button>
+                            </form>
+
                                  <div class="container ps-0 pt-4">
                                 <h4>Calories Burned:</h4>
                                 <div class="card">
                                     <div class="card-body">
-                                      ...
+                                      {{cal}}
                                     </div>
                                   </div>
                             </div>

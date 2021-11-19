@@ -479,7 +479,17 @@ def settings():
     else:
         return render_template("settings.html")
 
-      
+@app.route('/workout_form', methods=["GET", "POST"])
+def workout_form():
+    if request.method == "POST":
+        time = request.form.get("time")
+        inputTime = request.form.get("inputTime")
+        if(inputTime == "Minutes"):
+            cal = time * 460 / 60
+        else:
+            cal = time * 460
+        return render_template("testing_workout.html", cal=cal)
+
 @app.route('/register_form', methods=["GET", "POST"])
 def register_form():
     if request.method == "POST":
