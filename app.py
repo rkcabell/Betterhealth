@@ -70,6 +70,9 @@ def notification():
 def username():
     return render_template("testing_username.html")
     
+@app.route('/calorie')
+def calorie():
+    return render_template("calorie.html")
 
 def strip(text):
  text= text.replace("<ol>","").replace("<li>","").replace("</li>","").replace("</ol>","").replace("<b>","").replace("</b>","").replace("<a>","").replace("</a>","").replace("<a href=","").replace(">","").replace(";","")
