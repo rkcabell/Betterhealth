@@ -582,6 +582,7 @@ def index():
         if cals == "Invalid Entry: Check spelling and format":
             return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals, calorie_goal=cal_goal, cals_remaining=cals)
         db_update_eaten_cals(cals, CURRENT_USER_ID)
+        user_hist = history.find_one({"_id": CURRENT_USER_ID})          ##addition
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
         return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
