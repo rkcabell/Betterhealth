@@ -573,42 +573,32 @@ def index():
     CURRENT_USER_ID = CURRENT_USER["_id"]
     if request.method == "GET":
         db_set_current_user(CURRENT_USER)
-        #CURRENT_USER works here
         user_hist = history.find_one({"_id":CURRENT_USER_ID})
         print(user_hist)
         cal_goal = user_hist["calorie_goal"]
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
-        #ingredient = request.form['ingredient']
-        #cals = calorie_calc(ingredient)
+        cal_goal = round(cal_goal)
+        cals_consumed = round(cals_consumed)
+        cals_remaining = round(cals_remaining)
         return render_template('calorie.html', calorie_goal=cal_goal, cals=0, cals_consumed=cals_consumed, cals_remaining=cals_remaining)
-        #return render_template('calorie.html', ingredient=ingredient, cals=cals, calorie_goal=cal_goal)
-    # else:
-        # return render_template('calorie.html')
     elif request.method == "POST":
         user_hist = history.find_one({"_id": CURRENT_USER_ID})
         cal_goal = user_hist["calorie_goal"]
         ingredient = request.form['ingredient']
         cals = calorie_calc(ingredient)
+        cal_goal = round(cal_goal)
         if cals == "Invalid Entry: Check spelling and format":
             return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals, calorie_goal=cal_goal, cals_remaining=cals)
         db_update_eaten_cals(cals, CURRENT_USER_ID)
         user_hist = history.find_one({"_id": CURRENT_USER_ID})          
         cals_consumed = user_hist["eaten_cals"]
         cals_remaining =cal_goal-cals_consumed
+        cal_goal = round(cal_goal)
+        cals_consumed = round(cals_consumed)
+        cals_remaining = round(cals_remaining)
         return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
-    #else:
-       # return render_template('calorie.html')
 
-
-        
-#def index():
-  #  print("5")
-   # curr_user = CURRENT_USER
-  #  user_hist = history.find_one({"_id": curr_user["_id"]})
-   # cal_goal = user_hist["calorie_goal"]
-   # print("6")
-   # return render_template('calorie.html', calorie_goal=cal_goal)
 
 if __name__ == "__main__":
     app.run(debug=True)
