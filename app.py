@@ -43,7 +43,17 @@ def register():
 
 @app.route('/testing_homepage')
 def homepage():
-    return render_template("testing_homepage.html")
+    username = session['username'] 
+    CURRENT_USER = users.find_one({'username': username})
+    CURRENT_USER_ID = CURRENT_USER["_id"]
+    #db_set_current_user(CURRENT_USER_ID)
+    user_hist = history.find_one({"_id":CURRENT_USER_ID})
+    waterGoal = user_hist["water_goal"]
+    waterTracked = user_hist["water_tracked"]
+    #waterGoal = db_get_water_goal(CURRENT_USER_ID)
+    #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
+    water = int(waterGoal) - int(waterTracked)
+    return render_template('testing_homepage.html', water=water)
 
 @app.route('/profile_setup')
 def profile():
@@ -427,7 +437,15 @@ def login():
             CURRENT_USER = users.find_one({'username': username})
             db_set_current_user(CURRENT_USER)
             # pass current user into homepage
-            return render_template("testing_homepage.html", curr_user=CURRENT_USER)
+            CURRENT_USER_ID = CURRENT_USER["_id"]
+            #db_set_current_user(CURRENT_USER_ID)
+            user_hist = history.find_one({"_id":CURRENT_USER_ID})
+            waterGoal = user_hist["water_goal"]
+            waterTracked = user_hist["water_tracked"]
+            #waterGoal = db_get_water_goal(CURRENT_USER_ID)
+            #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
+            water = int(waterGoal) - int(waterTracked)
+            return render_template('testing_homepage.html', water=water, curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
             #    "username": request.form.get("username"),
@@ -559,7 +577,14 @@ def register_form():
             print(curr_hist)
             
             db_set_current_user(CURRENT_USER)
-            return render_template("testing_homepage.html")
+            #db_set_current_user(CURRENT_USER_ID)
+            user_hist = history.find_one({"_id":CURRENT_USER_ID})
+            waterGoal = user_hist["water_goal"]
+            waterTracked = user_hist["water_tracked"]
+            #waterGoal = db_get_water_goal(CURRENT_USER_ID)
+            #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
+            water = int(waterGoal) - int(waterTracked)
+            return render_template('testing_homepage.html', water=water)
         else:
             return "That login information is already taken!"
 
@@ -570,7 +595,7 @@ def water():
         CURRENT_USER = users.find_one({'username': username})
         CURRENT_USER_ID = CURRENT_USER["_id"]
         waterIntake = request.form.get("water")
-        db_set_current_user(CURRENT_USER_ID)
+        #db_set_current_user(CURRENT_USER_ID)
         db_update_water_tracked(waterIntake, CURRENT_USER_ID)
         user_hist = history.find_one({"_id":CURRENT_USER_ID})
         waterGoal = user_hist["water_goal"]
@@ -578,7 +603,7 @@ def water():
         #waterGoal = db_get_water_goal(CURRENT_USER_ID)
         #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
         water = int(waterGoal) - int(waterTracked)
-        return render_template('testing_hompage.html', water=water)
+        return render_template('testing_homepage.html', water=water)
 
 @app.route('/logout')
 def logout():
