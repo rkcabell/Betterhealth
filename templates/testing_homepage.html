@@ -221,17 +221,19 @@
                                     </path>
                                 </svg>
                             </span></h6> 
-
-                            <div class="input-group mb-3 pe-5">
-                                <input type="text" class="form-control" aria-label="Amount">
-                                <span class="input-group-text">Cups</span>
-                              </div>
+                            <form action="/water" method = "POST">
+                                <div class="input-group mb-3 pe-5" id="water" name="water">
+                                    <input type="text" class="form-control" aria-label="Amount">
+                                    <span class="input-group-text">Ounces</span>
+                                    <button type="submit" class="btn btn-primary">Enter</button>
+                                </div>
+                            </form>
 
                               <div class="container ps-0 pt-2">
-                                <h6>Amount left..</h6>
+                                <h6>Amount left: </h6>
                                 <div class="card">
                                     <div class="card-body">
-                                      ...
+                                      {{water}}
                                     </div>
                                   </div>
                             </div>

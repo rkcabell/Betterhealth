@@ -547,7 +547,7 @@ def register_form():
             print(history.find_one({"_id": CURRENT_USER_ID}))
 
             db_set_default_calorie_goal(weight, height, activity_level, gender, dob, CURRENT_USER_ID),
-            db_update_water_goal(64,CURRENT_USER_ID),
+            db_update_water_goal(round(weight * 2/3),CURRENT_USER_ID),
             db_update_eaten_cals(0,CURRENT_USER_ID),
             db_update_water_tracked(0,CURRENT_USER_ID),
             db_update_workout_cals(0,CURRENT_USER_ID),
@@ -562,6 +562,23 @@ def register_form():
             return render_template("testing_homepage.html")
         else:
             return "That login information is already taken!"
+
+@app.route('/water', methods=["GET", "POST"])
+def water():
+    if(request.method == "POST"):
+        username = session['username'] 
+        CURRENT_USER = users.find_one({'username': username})
+        CURRENT_USER_ID = CURRENT_USER["_id"]
+        waterIntake = request.form.get("water")
+        db_set_current_user(CURRENT_USER_ID)
+        db_update_water_tracked(waterIntake, CURRENT_USER_ID)
+        user_hist = history.find_one({"_id":CURRENT_USER_ID})
+        waterGoal = user_hist["water_goal"]
+        waterTracked = user_hist["water_tracked"]
+        #waterGoal = db_get_water_goal(CURRENT_USER_ID)
+        #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
+        water = int(waterGoal) - int(waterTracked)
+        return render_template('testing_hompage.html', water=water)
 
 @app.route('/logout')
 def logout():

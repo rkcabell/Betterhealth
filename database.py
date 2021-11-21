@@ -175,8 +175,10 @@ def db_update_water_goal(x, curr_id):
 
 # takes int
 def db_update_water_tracked(x, curr_id):
-            history.find_one_and_update({"_id": curr_id},
-                {"$set": {"water_tracked" : x}}, upsert=True)
+        curr = history.find_one({"_id": curr_id})
+        y = curr["water_tracked"]
+        history.find_one_and_update({"_id": curr_id},
+            {"$set": {"water_tracked" : x+y}}, upsert=True)
 
 # only increases, to decrease use workout
 def db_update_eaten_cals(x, curr_id):
