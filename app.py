@@ -547,7 +547,7 @@ def register_form():
             print(history.find_one({"_id": CURRENT_USER_ID}))
 
             db_set_default_calorie_goal(weight, height, activity_level, gender, dob, CURRENT_USER_ID),
-            db_update_water_goal(round(weight * 2/3),CURRENT_USER_ID),
+            db_update_water_goal(round(int(weight) * 2/3),CURRENT_USER_ID),
             db_update_eaten_cals(0,CURRENT_USER_ID),
             db_update_water_tracked(0,CURRENT_USER_ID),
             db_update_workout_cals(0,CURRENT_USER_ID),
