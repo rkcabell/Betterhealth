@@ -50,10 +50,13 @@ def homepage():
     user_hist = history.find_one({"_id":CURRENT_USER_ID})
     waterGoal = user_hist["water_goal"]
     waterTracked = user_hist["water_tracked"]
+    cal_goal = user_hist["calorie_goal"]
+    cal_goal = round(cal_goal)
     #waterGoal = db_get_water_goal(CURRENT_USER_ID)
     #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
     water = int(waterGoal) - int(waterTracked)
-    return render_template('testing_homepage.html', water=water)
+    
+    return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
 
 @app.route('/profile_setup')
 def profile():
@@ -79,6 +82,12 @@ def notification():
 @app.route('/testing_username')
 def username():
     return render_template("testing_username.html")
+
+@app.route('/updateweight')
+def updateweight():
+    return render_template("updateweight.html")
+
+
 
 
 def strip(text):
@@ -642,6 +651,10 @@ def index():
         cals_consumed = round(cals_consumed)
         cals_remaining = round(cals_remaining)
         return render_template('calorie.html', ingredient=ingredient, cals=cals, cals_consumed=cals_consumed, calorie_goal=cal_goal, cals_remaining=cals_remaining)
+
+        
+
+ 
 
 
 if __name__ == "__main__":
