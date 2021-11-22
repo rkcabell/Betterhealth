@@ -71,7 +71,7 @@
             <div class="col">
 
                 <div class="container-bg rounded">
-                    <h2>Hello <span type="text" value={{username}} ""></span></h2>
+                    <h2>Hello {{session.username}} <span type="text" value={{username}} ""></span></h2>
 
                     <figure class="figure">
                         <div class="profile-img">
@@ -80,13 +80,14 @@
                         </div>
                     </figure>
                     <div class="blue-text">
-                        <p>Calorie goal: <span type="text" value={{calorie_goal}} ""></span></p>
+                        <p>Calorie goal: {{calorie_goal}} <span type="text" value={{calorie_goal}} ""></span></p>
+                        
                         <p>Calories tracked: <span type="text" value={{calories_tracked}} ""></span></p>
                         <p><span type="text" value={{weight_left}} ""></span> left to reach goal!</p>
 
                     </div>
 
-                    <a href="./updateweight.html" class="btn btn-outline-success " aria-current="page">Update
+                    <a href="./updateweight" class="btn btn-outline-success " aria-current="page">Update
                         Weight</a>
                 </div>
                 <div class="container ">
