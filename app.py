@@ -593,7 +593,9 @@ def register_form():
             #waterGoal = db_get_water_goal(CURRENT_USER_ID)
             #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
             water = int(waterGoal) - int(waterTracked)
-            return render_template('testing_homepage.html', water=water)
+            cal_goal = user_hist["calorie_goal"]
+            cal_goal = round(cal_goal)
+            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
         else:
             return "That login information is already taken!"
 
@@ -612,7 +614,9 @@ def water():
         #waterGoal = db_get_water_goal(CURRENT_USER_ID)
         #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
         water = int(waterGoal) - int(waterTracked)
-        return render_template('testing_homepage.html', water=water)
+        cal_goal = user_hist["calorie_goal"]
+        cal_goal = round(cal_goal)
+        return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
 
 @app.route('/logout')
 def logout():
