@@ -55,8 +55,10 @@ def homepage():
     #waterGoal = db_get_water_goal(CURRENT_USER_ID)
     #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
     water = int(waterGoal) - int(waterTracked)
-    
-    return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
+    eaten_cals = user_hist["eaten_cals"]
+    workout_cals = user_hist["workout_cals"]
+    calories_tracked = eaten_cals - workout_cals
+    return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
 
 @app.route('/profile_setup')
 def profile():
@@ -454,7 +456,13 @@ def login():
             #waterGoal = db_get_water_goal(CURRENT_USER_ID)
             #waterTracked = db_get_water_tracked(CURRENT_USER_ID)
             water = int(waterGoal) - int(waterTracked)
-            return render_template('testing_homepage.html', water=water, curr_user=CURRENT_USER)
+            cal_goal = user_hist["calorie_goal"]
+            cal_goal = round(cal_goal)
+            eaten_cals = user_hist["eaten_cals"]
+            workout_cals = user_hist["workout_cals"]
+            calories_tracked = eaten_cals - workout_cals
+            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, curr_user = CURRENT_USER)
+            #return render_template('testing_homepage.html', water=water, curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
             #    "username": request.form.get("username"),
@@ -595,7 +603,10 @@ def register_form():
             water = int(waterGoal) - int(waterTracked)
             cal_goal = user_hist["calorie_goal"]
             cal_goal = round(cal_goal)
-            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
+            eaten_cals = user_hist["eaten_cals"]
+            workout_cals = user_hist["workout_cals"]
+            calories_tracked = eaten_cals - workout_cals
+            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
         else:
             return "That login information is already taken!"
 
@@ -616,7 +627,10 @@ def water():
         water = int(waterGoal) - int(waterTracked)
         cal_goal = user_hist["calorie_goal"]
         cal_goal = round(cal_goal)
-        return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal)
+        eaten_cals = user_hist["eaten_cals"]
+        workout_cals = user_hist["workout_cals"]
+        calories_tracked = eaten_cals - workout_cals
+        return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
 
 @app.route('/logout')
 def logout():
