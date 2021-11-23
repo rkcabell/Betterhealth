@@ -58,7 +58,8 @@ def homepage():
     eaten_cals = user_hist["eaten_cals"]
     workout_cals = user_hist["workout_cals"]
     calories_tracked = eaten_cals - workout_cals
-    return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
+    cals_left = cal_goal - calories_tracked
+    return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, weight_left = cals_left)
 
 @app.route('/profile_setup')
 def profile():
@@ -461,7 +462,8 @@ def login():
             eaten_cals = user_hist["eaten_cals"]
             workout_cals = user_hist["workout_cals"]
             calories_tracked = eaten_cals - workout_cals
-            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, curr_user = CURRENT_USER)
+            cals_left = cal_goal - calories_tracked
+            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, weight_left = cals_left, curr_user = CURRENT_USER)
             #return render_template('testing_homepage.html', water=water, curr_user=CURRENT_USER)
         elif request.form.get('submitbutton') == 'register':
             #new_user = {
@@ -606,7 +608,8 @@ def register_form():
             eaten_cals = user_hist["eaten_cals"]
             workout_cals = user_hist["workout_cals"]
             calories_tracked = eaten_cals - workout_cals
-            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
+            cals_left = cal_goal - calories_tracked
+            return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, weight_left = cals_left)
         else:
             return "That login information is already taken!"
 
@@ -630,7 +633,8 @@ def water():
         eaten_cals = user_hist["eaten_cals"]
         workout_cals = user_hist["workout_cals"]
         calories_tracked = eaten_cals - workout_cals
-        return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked)
+        cals_left = cal_goal - calories_tracked
+        return render_template('testing_homepage.html', water=water, calorie_goal=cal_goal, calories_tracked = calories_tracked, weight_left = cals_left)
 
 @app.route('/logout')
 def logout():
